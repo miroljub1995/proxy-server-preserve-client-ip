@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # consts
 IMAGE_NAME='dunja/pspcip/web-server'
