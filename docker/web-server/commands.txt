@@ -1,3 +1,0 @@
-sudo docker build -t dunja/pspcip/web-server .
-sudo docker run --network host -d dunja/pspcip/web-server
-sudo docker container stop <id>
