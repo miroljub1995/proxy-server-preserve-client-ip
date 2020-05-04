@@ -13,6 +13,6 @@ stop)
     docker ps -a | awk '{ print $1,$2 }' | grep $IMAGE_NAME | awk '{print $1 }' | xargs -I {} docker stop {}
     ;;
 start)
-    docker run -p 8080:8080 --name=web-server --network="my-net" -d $IMAGE_NAME
+    docker run -p 8080:8080 --name=web-server --network="my-net" --ip="172.72.0.2" -d $IMAGE_NAME
     ;;
 esac
