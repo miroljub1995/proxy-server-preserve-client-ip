@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # consts
-IMAGE_NAME='dunja/pspcip/reverse-proxy'
+IMAGE_NAME='dunja/pspcip/filter'
 
 case $1 in
 rebuild)
@@ -13,6 +13,6 @@ stop)
     docker ps -a | awk '{ print $1,$2 }' | grep $IMAGE_NAME | awk '{print $1 }' | xargs -I {} docker stop {}
     ;;
 start)
-    docker run -p 8083:8083 -p 8084:8084 -p 8085:8085 --name=rev-proxy --network="my-net" $IMAGE_NAME
+    docker run -p 8003:8003 --name=filter --network="my-net" $IMAGE_NAME
     ;;
 esac
