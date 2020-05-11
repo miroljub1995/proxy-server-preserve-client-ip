@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # consts
-IMAGE_NAME='dunja/pspcip/reverse-proxy'
+IMAGE_NAME='dunja/pspcip/hybrid-server'
 
 case $1 in
 rebuild)
@@ -13,6 +13,6 @@ stop)
     docker ps -a | awk '{ print $1,$2 }' | grep $IMAGE_NAME | awk '{print $1 }' | xargs -I {} docker stop {}
     ;;
 start)
-    docker run -p 8083:8083 -p 8084:8084 --name=rev-proxy --network="my-net" $IMAGE_NAME
+    docker run -p 8082:8082 -p 8080:8080 --name=hybrid-server --cap-add NET_ADMIN --network="my-net" $IMAGE_NAME
     ;;
 esac
