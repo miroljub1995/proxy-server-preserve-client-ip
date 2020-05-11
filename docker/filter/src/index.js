@@ -5,7 +5,7 @@ process.on("uncaughtException", function (error) {
 });
 
 var incomingPort = 8002;
-var outcomingHost = '172.72.0.2';
+var outcomingHost = 'hybrid-server';
 var outcomingPort = 8082;
 
 var server = net.createServer(incomingSocket => {
