@@ -27,3 +27,14 @@ spec:
           capabilities:
             add:
             - NET_ADMIN
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hybrid-server
+spec:
+  selector:
+    app: hybrid-server
+  ports:
+    - port: 8080
+    - port: 8002
