@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: hybrid-server
-        image: dunja/pspcip/hybrid-server:latest
-        imagePullPolicy: Never
+        image: dunja/pspcip/hybrid-server
+        # imagePullPolicy: Never
         ports:
         - containerPort: 8080
           name: server
