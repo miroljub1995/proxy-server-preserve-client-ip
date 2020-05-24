@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: hybrid-server-deployment
+    labels:
+        app: hybrid-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hybrid-server
+  template:
+    metadata:
+      labels:
+        app: hybrid-server
+    spec:
+      containers:
+      - name: hybrid-server
+        image: dunja/pspcip/hybrid-server:latest
+        ports:
+        - containerPort: 8080
+          name: server
+        - containerPort: 8082
+          name: mmproxy
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
