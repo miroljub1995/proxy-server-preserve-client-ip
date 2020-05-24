@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: hybrid-server-deployment
-    labels:
-        app: hybrid-server
+  name: hybrid-server-deployment
+  labels:
+    app: hybrid-server
 spec:
   replicas: 3
   selector:
