@@ -5,7 +5,7 @@ metadata:
   labels:
     app: hybrid-server
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: hybrid-server
@@ -20,9 +20,9 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 8080
-          name: server
+          name: http
         - containerPort: 8082
-          name: mmproxy
+          name: proxy-protocol
         securityContext:
           capabilities:
             add:
@@ -37,6 +37,6 @@ spec:
     app: hybrid-server
   ports:
     - port: 8080
-      name: server
-    - port: 8002
-      name: mmproxy
+      name: http
+    - port: 8082
+      name: proxy-protocol

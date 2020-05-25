@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reverse-proxy-deployment
+  labels:
+    app: reverse-proxy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: reverse-proxy
+  template:
+    metadata:
+      labels:
+        app: reverse-proxy
+    spec:
+      containers:
+      - name: reverse-proxy
+        image: dunja/pspcip/reverse-proxy
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8085
+          name: pass-to-filter
+        - containerPort: 8084
+          name: pass-to-hybrid-server-proxy-proto
+        - containerPort: 8083
+          name: pass-to-hybrid-server-http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reverse-proxy
+spec:
+  selector:
+    app: reverse-proxy
+  ports:
+    - port: 8085
+      name: pass-to-filter
+    - port: 8084
+      name: pass-to-hybrid-server-proxy-proto
+    - port: 8083
+      name: pass-to-hybrid-server-http
