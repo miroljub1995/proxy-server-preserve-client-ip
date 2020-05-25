@@ -20,11 +20,11 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 8085
-          name: pass-to-filter
+          name: to-filter
         - containerPort: 8084
-          name: pass-to-hybrid-server-proxy-proto
+          name: to-hs-proxy #pass to hybrid server with proxy protocol
         - containerPort: 8083
-          name: pass-to-hybrid-server-http
+          name: to-hs-http #pass to hybrid server http
 ---
 apiVersion: v1
 kind: Service
@@ -35,8 +35,8 @@ spec:
     app: reverse-proxy
   ports:
     - port: 8085
-      name: pass-to-filter
+      name: to-filter
     - port: 8084
-      name: pass-to-hybrid-server-proxy-proto
+      name: to-hs-proxy
     - port: 8083
-      name: pass-to-hybrid-server-http
+      name: to-hs-http

@@ -22,7 +22,7 @@ spec:
         - containerPort: 8080
           name: http
         - containerPort: 8082
-          name: proxy-protocol
+          name: proxy
         securityContext:
           capabilities:
             add:
@@ -39,4 +39,4 @@ spec:
     - port: 8080
       name: http
     - port: 8082
-      name: proxy-protocol
+      name: proxy
