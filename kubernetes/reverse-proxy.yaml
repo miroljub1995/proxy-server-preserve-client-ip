@@ -25,12 +25,29 @@ spec:
           name: to-hs-proxy #pass to hybrid server with proxy protocol
         - containerPort: 8083
           name: to-hs-http #pass to hybrid server http
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: reverse-proxy
+# spec:
+#   selector:
+#     app: reverse-proxy
+#   ports:
+#     - port: 8085
+#       name: to-filter
+#     - port: 8084
+#       name: to-hs-proxy
+#     - port: 8083
+#       name: to-hs-http
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: reverse-proxy
+  name: reverse-proxy-lb
 spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
     app: reverse-proxy
   ports:
