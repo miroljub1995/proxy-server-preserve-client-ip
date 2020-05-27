@@ -4,6 +4,7 @@ metadata:
   name: reverse-proxy-lb
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
     app: reverse-proxy
   ports:
