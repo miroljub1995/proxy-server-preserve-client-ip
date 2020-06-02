@@ -39,9 +39,9 @@ spec:
         ports:
         - containerPort: 27017
           name: mongo
-        volumeMounts:
-        - name: mongo-volume
-          mountPath: /data/db
+        # volumeMounts:
+        # - name: mongo-volume
+        #   mountPath: /data/db
 #   volumeClaimTemplates:
 #   - metadata:
 #       name: mongo-volume
