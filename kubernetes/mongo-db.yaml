@@ -42,6 +42,8 @@ spec:
         # volumeMounts:
         # - name: mongo-volume
         #   mountPath: /data/db
+        postInstall:
+          
 #   volumeClaimTemplates:
 #   - metadata:
 #       name: mongo-volume
@@ -50,3 +52,29 @@ spec:
 #       resources:
 #         requests:
 #           storage: 1Gi
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: setup-mongo-db
+spec:
+  template:
+    spec:
+      containers:
+      - name: mongo
+        image: mongo
+        command: ["mongo",  "--host", "mongo-db", "--eval", 'rs.initiate({_id:"repl-set0",version:1,members:[{_id:0,host:"mongo-db-0:27017"},{_id:1,host:"mongo-db-1:27017"},{_id:2,host:"mongo-db-2:27017"}]})']
+      restartPolicy: None
+
+
+# rs.initiate(
+#   {
+#      _id: "repl-set0",
+#      version: 1,
+#      members: [
+#         { _id: 0, host : "mongo-db-0:27017" },
+#         { _id: 1, host : "mongo-db-1:27017" },
+#         { _id: 2, host : "mongo-db-2:27017" }
+#      ]
+#   }
+# )
