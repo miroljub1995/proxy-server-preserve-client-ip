@@ -3,9 +3,9 @@ FROM golang:1.14-alpine as mm-builder
 RUN apk add --no-cache git
 # RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go get github.com/path-network/go-mmproxy
 #try with specific version
-RUN go init go-mmproxy
-WORKDIR /go/src/go-mmproxy/
-RUN go get -d github.com/path-network/go-mmproxy@2.0
+RUN go mod init github.com/path-network/go-mmproxy@2.0
+# WORKDIR /go/src/go-mmproxy/
+# RUN go get -d github.com/path-network/go-mmproxy@2.0
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build
 
 ###### creating server
