@@ -63,7 +63,7 @@ spec:
       containers:
       - name: mongo
         image: mongo
-        command: ["mongo",  "--host", "mongo-db", "--eval", 'rs.initiate({_id:"repl-set0",version:1,members:[{_id:0,host:"mongo-db-0:27017"},{_id:1,host:"mongo-db-1:27017"},{_id:2,host:"mongo-db-2:27017"}]})']
+        command: ["mongo",  "--host", "mongo-db", "--eval", 'rs.initiate({_id:"repl-set0",version:1,members:[{_id:0,host:"mongo-db-0.mongo-db:27017"},{_id:1,host:"mongo-db-1.mongo-db:27017"},{_id:2,host:"mongo-db-2.mongo-db:27017"}]})']
       restartPolicy: Never
 
 
