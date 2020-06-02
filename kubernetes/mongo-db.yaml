@@ -20,7 +20,7 @@ spec:
   selector:
     matchLabels:
       app: mongo-db
-#   serviceName: "mongo"
+  serviceName: "mongo-db"
   replicas: 3
   template:
     metadata:
