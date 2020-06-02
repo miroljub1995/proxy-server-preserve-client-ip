@@ -1,10 +1,10 @@
 ###### building go-mmproxy
-FROM golang:alpine as mm-builder
+FROM golang:1.14-alpine as mm-builder
 RUN apk add --no-cache git
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go get github.com/path-network/go-mmproxy
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go get github.com/path-network/go-mmproxy@2.0
 
 ###### creating server
-FROM node:lts-alpine
+FROM node:12-alpine
 
 #setup mmproxy
 RUN apk add iproute2

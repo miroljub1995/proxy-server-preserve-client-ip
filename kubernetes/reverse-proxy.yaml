@@ -17,29 +17,12 @@ spec:
       containers:
       - name: reverse-proxy
         image: dunja/pspcip/reverse-proxy
-        imagePullPolicy: Never
+        imagePullPolicy: Never # use locally built images
         ports:
-        - containerPort: 8085
-          name: to-filter
         - containerPort: 8084
           name: to-hs-proxy #pass to hybrid server with proxy protocol
         - containerPort: 8083
-          name: to-hs-http #pass to hybrid server http
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: reverse-proxy
-# spec:
-#   selector:
-#     app: reverse-proxy
-#   ports:
-#     - port: 8085
-#       name: to-filter
-#     - port: 8084
-#       name: to-hs-proxy
-#     - port: 8083
-#       name: to-hs-http
+          name: to-hs-http #pass to hybrid server without proxy protocol
 ---
 apiVersion: v1
 kind: Service
@@ -51,8 +34,6 @@ spec:
   selector:
     app: reverse-proxy
   ports:
-    - port: 8085
-      name: to-filter
     - port: 8084
       name: to-hs-proxy
     - port: 8083
