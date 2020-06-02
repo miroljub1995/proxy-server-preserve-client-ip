@@ -43,10 +43,11 @@ spec:
         - name: mongo-volume
           mountPath: /data/db
   volumeClaimTemplates:
-  - metadata:
-      name: mongo-volume
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 1Gi
+#   - metadata:
+#       name: mongo-volume
+#     spec:
+#       accessModes: [ "ReadWriteOnce" ]
+#       resources:
+#         requests:
+#           storage: 1Gi
+  ""
