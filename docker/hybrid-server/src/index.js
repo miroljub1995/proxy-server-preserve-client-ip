@@ -16,11 +16,13 @@ app.get('/mongo-repl-status', (req, res) => {
     res.setHeader('Content-Type', 'application/json')
     MongoClient.connect('mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017/?replicaSet=repl-set0', (err, db) => {
         if (err) {
+            console.log(err)
             res.send(JSON.stringify(err))
         }
         const adminDb = db.admin()
         adminDb.command({ "replSetGetStatus": 1 }, (err, result) => {
             if (err) {
+                console.log(err)
                 res.send(JSON.stringify(err))
             }
             res.send(JSON.stringify(result))
