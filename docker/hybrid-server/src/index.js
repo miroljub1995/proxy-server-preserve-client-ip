@@ -1,7 +1,7 @@
 'use strict';
 
-const express = require('express');
-import { MongoClient } from 'mongodb'
+const express = require('express')
+const MongoClient = require('mongodb')
 
 // Constants
 const PORT = 8080;
