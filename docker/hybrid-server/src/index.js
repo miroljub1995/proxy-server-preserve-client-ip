@@ -14,9 +14,9 @@ app.get('/', (req, res) => {
 
 app.get('/mongo-repl-status', (req, res) => {
     res.setHeader('Content-Type', 'application/json')
-    try {
 
-        MongoClient.connect('mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017/?replicaSet=repl-set0', (err, db) => {
+    MongoClient.connect('mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017/?replicaSet=repl-set0', (err, db) => {
+        try {
             if (err) {
                 console.log(err)
                 res.send(JSON.stringify(err))
@@ -30,11 +30,11 @@ app.get('/mongo-repl-status', (req, res) => {
                 }
                 res.send(JSON.stringify(result))
             })
-        })
-    }
-    catch (err) {
-        res.send(JSON.stringify(err))
-    }
+        }
+        catch (err) {
+            res.send(JSON.stringify(err))
+        }
+    })
 })
 
 app.listen(PORT, HOST);
