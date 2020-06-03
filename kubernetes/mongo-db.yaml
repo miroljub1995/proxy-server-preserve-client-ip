@@ -21,7 +21,7 @@ spec:
     matchLabels:
       app: mongo-db
   serviceName: "mongo-db"
-  replicas: 3
+  replicas: 5
   template:
     metadata:
       labels:
@@ -63,5 +63,5 @@ spec:
       containers:
       - name: mongo
         image: mongo
-        command: ["mongo",  "--host", "mongo-db", "--eval", 'res=rs.initiate({_id:"repl-set0",version:1,members:[{_id:0,host:"mongo-db-0.mongo-db:27017"},{_id:1,host:"mongo-db-1.mongo-db:27017"},{_id:2,host:"mongo-db-2.mongo-db:27017"}]});if(res.ok!=1){throw res.errmsg}']
+        command: ["mongo",  "--host", "mongo-db-0.mongo-db", "--eval", 'res=rs.initiate({_id:"repl-set0",version:1,members:[{_id:0,host:"mongo-db-0.mongo-db:27017"},{_id:1,host:"mongo-db-1.mongo-db:27017"},{_id:2,host:"mongo-db-2.mongo-db:27017"},{_id:3,host:"mongo-db-3.mongo-db:27017"},{_id:4,host:"mongo-db-4.mongo-db:27017"}]});if(res.ok!=1){throw res.errmsg}']
       restartPolicy: OnFailure
