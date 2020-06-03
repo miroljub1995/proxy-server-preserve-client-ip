@@ -20,21 +20,21 @@ app.get('/mongo-repl-status', (req, res) => {
         try {
             if (err) {
                 console.log(err)
-                res.send(JSON.stringify(err))
+                res.send(JSON.stringify(err, null, '\t'))
                 return;
             }
             client.db('admin').admin().replSetGetStatus((err, result) => {
                 if (err) {
                     console.log(err)
-                    res.send(JSON.stringify(err))
+                    res.send(JSON.stringify(err, null, '\t'))
                     return;
                 }
-                res.send(JSON.stringify(result))
+                res.send(JSON.stringify(result, null, '\t'))
             })
         }
         catch (err) {
             console.log(err)
-            res.send(JSON.stringify(err))
+            res.send(JSON.stringify(err, null, '\t'))
         }
     })
 })
