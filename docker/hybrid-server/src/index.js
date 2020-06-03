@@ -22,7 +22,7 @@ app.get('/mongo-repl-status', (req, res) => {
                 res.send(JSON.stringify(err))
                 return;
             }
-            db.adminCommand("replSetGetStatus", (err, result) => {
+            db('admin').adminCommand({ "replSetGetStatus": 1 }, (err, result) => {
                 if (err) {
                     console.log(err)
                     res.send(JSON.stringify(err))
