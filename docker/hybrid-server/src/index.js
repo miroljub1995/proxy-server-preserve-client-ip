@@ -32,6 +32,7 @@ app.get('/mongo-repl-status', (req, res) => {
             })
         }
         catch (err) {
+            console.log(err)
             res.send(JSON.stringify(err))
         }
     })
