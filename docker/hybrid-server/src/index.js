@@ -15,14 +15,15 @@ app.get('/', (req, res) => {
 app.get('/mongo-repl-status', (req, res) => {
     res.setHeader('Content-Type', 'application/json')
 
-    MongoClient.connect('mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017/?replicaSet=repl-set0', (err, client) => {
+    MongoClient.connect('mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017/?replicaSet=repl-set0', { useUnifiedTopology: true, }, (err, client) => {
         try {
             if (err) {
                 console.log(err)
                 res.send(JSON.stringify(err))
                 return;
             }
-            client.db('admin').adminCommand({ replSetGetStatus: 1 }, { useUnifiedTopology: true, }, (err, result) => {
+            // client.db('admin').adminCommand({ replSetGetStatus: 1 }, { useUnifiedTopology: true, }, (err, result) => {
+            client.db('admin').admin().replSetGetStatus((err, result) => {
                 if (err) {
                     console.log(err)
                     res.send(JSON.stringify(err))
