@@ -23,6 +23,10 @@ spec:
           name: to-hs-proxy #pass to hybrid server with proxy protocol
         - containerPort: 8083
           name: to-hs-http #pass to hybrid server without proxy protocol
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
 ---
 apiVersion: v1
 kind: Service
