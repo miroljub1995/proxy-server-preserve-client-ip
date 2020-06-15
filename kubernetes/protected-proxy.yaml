@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: protected-proxy-deployment
+  labels:
+    app: protected-proxy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: protected-proxy
+  template:
+    metadata:
+      labels:
+        app: protected-proxy
+    spec:
+      containers:
+      - name: protected-proxy
+        image: dunja/pspcip/protected-proxy
+        imagePullPolicy: Never # use locally built images
+        ports:
+        - containerPort: 8084
+          name: to-hs-proxy #pass to hybrid server with proxy protocol
+        - containerPort: 8083
+          name: to-hs-http #pass to hybrid server without proxy protocol
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: protected-proxy-lb
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  selector:
+    app: protected-proxy
+  ports:
+    - port: 8084
+      name: to-hs-proxy
+    - port: 8083
+      name: to-hs-http
