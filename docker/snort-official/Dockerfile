@@ -6,5 +6,6 @@ RUN snort -T -c /etc/snort/snort.conf
 # ############### Test snort #################
 # RUN echo 'alert icmp any any -> $HOME_NET any (msg:"ICMP test"; sid:10000001; rev:001;)' > /etc/snort/rules/local.rules
 # RUN snort -A console -c /etc/snort/snort.conf
+# ##### ping this container from another #####
 # ############################################
 CMD [ "snort", "-c", "/etc/snort/snort.conf" ]
