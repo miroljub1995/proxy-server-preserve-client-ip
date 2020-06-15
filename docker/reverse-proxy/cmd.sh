@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # consts
-IMAGE_NAME='dunja/pspcip/reverse-proxy'
+IMAGE_NAME='local/pspcip/reverse-proxy'
 
 case $1 in
 rebuild)

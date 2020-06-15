@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: reverse-proxy
-        image: dunja/pspcip/reverse-proxy
+        image: local/pspcip/reverse-proxy
         imagePullPolicy: Never # use locally built images
         ports:
         - containerPort: 8084

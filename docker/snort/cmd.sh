@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # consts
-IMAGE_NAME='dunja/pspcip/snort'
+IMAGE_NAME='local/pspcip/snort'
 
 case $1 in
 rebuild)

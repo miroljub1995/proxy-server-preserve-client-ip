@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: protected-proxy
-        image: dunja/pspcip/protected-proxy
+        image: local/pspcip/protected-proxy
         imagePullPolicy: Never # use locally built images
         ports:
         - containerPort: 8084

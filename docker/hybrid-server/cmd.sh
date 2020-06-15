@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # consts
-IMAGE_NAME='dunja/pspcip/hybrid-server'
+IMAGE_NAME='local/pspcip/hybrid-server'
 
 case $1 in
 rebuild)
