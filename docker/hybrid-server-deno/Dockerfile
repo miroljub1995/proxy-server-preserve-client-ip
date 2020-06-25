@@ -5,8 +5,8 @@
 
 # ###### building client
 FROM node:12.18 as client
-COPY client/ /app/
-WORKDIR /app/
+COPY client /app
+WORKDIR /app
 RUN npm i && npm run build
 
 ###### creating server
@@ -20,9 +20,9 @@ FROM hayd/alpine-deno:1.1.1
 # EXPOSE 8082
 
 #setup server
-COPY --from=client /app/build/ /app/client/
+COPY --from=client /app/build /app/client
 WORKDIR /app/server
-COPY server/src/ ./
+COPY server/src .
 RUN deno cache index.ts
 EXPOSE 8080
 CMD [ "run", "--allow-net", "--allow-read", "index.ts" ]
