@@ -6,6 +6,9 @@ import {
   Switch,
   Route
 } from "react-router-dom"
+import Saved from './Saved';
+import Home from './Home';
+import Login from './Login';
 
 function App() {
   return (
@@ -13,10 +16,16 @@ function App() {
       <Navigation />
       <Switch>
         <Route path="/saved">
-          <p>Saved</p>
+          <Saved />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/account">
+          <p>Account</p>
         </Route>
         <Route path="/">
-          <p>Home</p>
+          <Home />
         </Route>
       </Switch>
     </Router>

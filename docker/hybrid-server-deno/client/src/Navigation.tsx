@@ -15,6 +15,12 @@ function Navigation() {
           <Nav.Link as={Link} to="/">Home</Nav.Link>
           <Nav.Link as={Link} to="/saved">Saved</Nav.Link>
         </Nav>
+        <Nav>
+          <Nav.Link as={Link} to="/login">Login</Nav.Link>
+          <Navbar.Text>
+            Signed in as: <Link to="/account">Mark Otto</Link>
+          </Navbar.Text>
+        </Nav>
       </Navbar.Collapse>
     </Navbar>
   )
