@@ -10,6 +10,7 @@ import Saved from './Saved';
 import Home from './Home';
 import Login from './Login';
 import { Container } from 'react-bootstrap'
+import Register from './Register';
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
           </Route>
           <Route path="/account">
             <p>Account</p>
