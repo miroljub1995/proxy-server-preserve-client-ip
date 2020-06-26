@@ -9,25 +9,28 @@ import {
 import Saved from './Saved';
 import Home from './Home';
 import Login from './Login';
+import { Container } from 'react-bootstrap'
 
 function App() {
   return (
     <Router>
-      <Navigation />
-      <Switch>
-        <Route path="/saved">
-          <Saved />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/account">
-          <p>Account</p>
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
+      <Container>
+        <Navigation />
+        <Switch>
+          <Route path="/saved">
+            <Saved />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/account">
+            <p>Account</p>
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Container>
     </Router>
   )
 }
