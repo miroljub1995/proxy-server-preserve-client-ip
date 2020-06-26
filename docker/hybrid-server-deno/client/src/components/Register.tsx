@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Col, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Button, Col, Form } from 'react-bootstrap'
 
 function Register() {
   const [email, setEmail] = useState("")
@@ -20,9 +19,6 @@ function Register() {
         <Form.Label>Password</Form.Label>
         <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
       </Form.Group>
-      <Col>
-        Already have account? {<Link to="/login">Log in</Link>}
-      </Col>
       <Col className="col">
         <Button variant="primary" type="button" onClick={() => onRegister({ email, password })}>Register</Button>
       </Col>
