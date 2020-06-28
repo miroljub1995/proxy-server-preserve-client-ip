@@ -1,11 +1,13 @@
 import React from 'react'
 import {
   Navbar,
-  Nav
+  Nav,
+  NavDropdown
 } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 function Navigation() {
+  const email = "miroljub1995@gmail.com"
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand href="/">Location saver</Navbar.Brand>
@@ -17,9 +19,9 @@ function Navigation() {
         </Nav>
         <Nav>
           <Nav.Link as={Link} to="/login">Login</Nav.Link>
-          <Navbar.Text>
-            Signed in as: <Link to="/account">Mark Otto</Link>
-          </Navbar.Text>
+          <NavDropdown title={email} id="basic-nav-dropdown">
+            <NavDropdown.Item as={Link} to="/logout">Logout</NavDropdown.Item>
+          </NavDropdown>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

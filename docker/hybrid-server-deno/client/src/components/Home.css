@@ -1,0 +1,13 @@
+.gmap {
+  border: 0;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-container button {
+  margin-top: 15px;
+}

@@ -15,8 +15,8 @@ import Register from './Register';
 function App() {
   return (
     <Router>
+      <Navigation />
       <Container>
-        <Navigation />
         <Switch>
           <Route path="/saved">
             <Saved />
