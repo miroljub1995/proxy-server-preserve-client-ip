@@ -13,6 +13,7 @@ function Home() {
         src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDRlAl7Ob0YjhoU2qgPzXGnEOmFd2UNCsw&q=${location}`}>
       </iframe>
       <Button type="button">Save current location</Button>
+      <p>Backend: {process.env.REACT_APP_BACKEND}</p>
     </div>
   )
 }
