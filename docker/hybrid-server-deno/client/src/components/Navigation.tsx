@@ -4,10 +4,23 @@ import {
   Nav,
   NavDropdown
 } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { useUserStatus, logout } from './UserStatus'
 
 function Navigation() {
-  const email = "miroljub1995@gmail.com"
+  const [userStatus, setUserStatus] = useUserStatus()
+  const history = useHistory()
+  async function onLogout() {
+    console.log('Logout')
+    const res = await fetch(process.env.REACT_APP_API_ENDPOINT + '/logout', {
+      method: 'POST',
+      credentials: 'include'
+    })
+    if (res.status === 200) {
+      setUserStatus(logout())
+      history.push('/')
+    }
+  }
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand href="/">Location saver</Navbar.Brand>
@@ -18,10 +31,12 @@ function Navigation() {
           <Nav.Link as={Link} to="/saved">Saved</Nav.Link>
         </Nav>
         <Nav>
-          <Nav.Link as={Link} to="/login">Login</Nav.Link>
-          <NavDropdown title={email} id="basic-nav-dropdown">
-            <NavDropdown.Item as={Link} to="/logout">Logout</NavDropdown.Item>
-          </NavDropdown>
+          {userStatus.isAuthenticated || (<Nav.Link as={Link} to="/login">Login</Nav.Link>)}
+          {userStatus.isAuthenticated && (
+            <NavDropdown title={userStatus.email} id="basic-nav-dropdown">
+              {/* <NavDropdown.Item as={Link} to="/logout">Logout</NavDropdown.Item> */}
+              <NavDropdown.Item onClick={onLogout}>Logout</NavDropdown.Item>
+            </NavDropdown>)}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

@@ -1,41 +1,44 @@
 import React from 'react';
-import './App.css'
-import Navigation from './Navigation'
+import { Container } from 'react-bootstrap';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom"
-import Saved from './Saved';
+
+  Route, Switch
+} from "react-router-dom";
+import './App.css';
 import Home from './Home';
 import Login from './Login';
-import { Container } from 'react-bootstrap'
+import Navigation from './Navigation';
 import Register from './Register';
+import Saved from './Saved';
+import UserStatus from './UserStatus';
 
 function App() {
   return (
-    <Router>
-      <Navigation />
-      <Container>
-        <Switch>
-          <Route path="/saved">
-            <Saved />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/account">
-            <p>Account</p>
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </Container>
-    </Router>
+    <UserStatus>
+      <Router>
+        <Navigation />
+        <Container>
+          <Switch>
+            <Route path="/saved">
+              <Saved />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
+            <Route path="/account">
+              <p>Account</p>
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </Container>
+      </Router>
+    </UserStatus>
   )
 }
 

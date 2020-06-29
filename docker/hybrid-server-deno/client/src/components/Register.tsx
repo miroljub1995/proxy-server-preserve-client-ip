@@ -5,8 +5,16 @@ function Register() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  function onRegister({ email, password }: { email: string, password: string }) {
+  function onRegister(email: string, password: string) {
     console.log('registering', email, password)
+    fetch(process.env.REACT_APP_API_ENDPOINT + "/register", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    })
+      .then(console.log)
   }
 
   return (
@@ -20,7 +28,7 @@ function Register() {
         <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
       </Form.Group>
       <Col className="col">
-        <Button variant="primary" type="button" onClick={() => onRegister({ email, password })}>Register</Button>
+        <Button variant="primary" type="button" onClick={() => onRegister(email, password)}>Register</Button>
       </Col>
     </Form>
   )
