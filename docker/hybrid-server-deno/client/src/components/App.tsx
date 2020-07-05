@@ -5,7 +5,6 @@ import {
 
   Route, Switch
 } from "react-router-dom";
-import './App.css';
 import Home from './Home';
 import Login from './Login';
 import Navigation from './Navigation';
