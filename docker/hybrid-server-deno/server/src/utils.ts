@@ -1,5 +1,6 @@
-import { Jose, makeJwt, Payload, setExpiration } from 'https://deno.land/x/djwt@v0.9.0/create.ts'
-import { validateJwt as validateJwtCore } from 'https://deno.land/x/djwt@v0.9.0/validate.ts'
+import { Status } from "https://deno.land/std@0.57.0/http/mod.ts";
+import { Jose, makeJwt, Payload, setExpiration } from 'https://deno.land/x/djwt@v0.9.0/create.ts';
+import { validateJwt as validateJwtCore } from 'https://deno.land/x/djwt@v0.9.0/validate.ts';
 
 // TODO: load key from env
 const key = "this-is-my-secret"
@@ -21,6 +22,20 @@ export async function validateJwt(jwt: string) {
   return validateJwtCore(jwt, key, { isThrowing: false })
 }
 
-export async function getCurrentLocation(ip: Deno.NetAddr) {
-
+export async function getCurrentLocation(addr: Deno.NetAddr) {
+  function isPrivateIP(ip: string) {
+    return /(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/.test(ip)
+  }
+  function createURL(ip: string) {
+    const fieldsParam = 'fields=status,message,country,city'
+    if (isPrivateIP(ip))
+      return `http://ip-api.com/json?${fieldsParam}`
+    return `http://ip-api.com/json/${ip}?${fieldsParam}`
+  }
+  const res = await fetch(createURL(addr.hostname))
+  if (res.status === Status.OK) {
+    const { country, city } = await res.json() as { country: string, city: string }
+    return { country, city }
+  }
+  return null
 }

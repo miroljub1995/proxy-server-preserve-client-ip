@@ -1,5 +1,13 @@
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useState, useCallback, useEffect } from "react";
+
+export function useInput() {
+  const [value, setValue] = useState('')
+  function setStateFromInput(e: React.ChangeEvent<HTMLInputElement>): void {
+    setValue(e.target.value)
+  }
+  return [value, setStateFromInput] as const
+}
 
 export function useLocation() {
   const [currentLocation, setCurrentLocation] = useState<string | null>(null)
@@ -41,4 +49,12 @@ export function useLocation() {
     }
   }, [history])
   return [currentLocation, saveCurrentLocation] as const
+}
+
+export function useModal() {
+  const [show, setShow] = useState(false)
+  const handleHide = () => setShow(false)
+  const handleShow = () => setShow(true)
+
+  return [show, handleShow, handleHide] as const
 }

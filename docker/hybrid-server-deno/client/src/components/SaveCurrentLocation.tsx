@@ -1,8 +1,6 @@
 import React from "react"
 import { Button, Form, Modal } from "react-bootstrap"
-import { useInput } from "./useInput"
-import { useLocation } from "./useLocation"
-import { useModal } from "./useModal"
+import { useInput, useLocation, useModal } from "./CustomHooks"
 
 export default function SaveCurrentLocation() {
   const [show, handleShow, handleHide] = useModal()

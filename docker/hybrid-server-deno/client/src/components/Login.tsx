@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Col, Form } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom'
+import { useInput } from './CustomHooks'
 import { login, useUserStatus } from './UserStatus'
 
 function Login() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useInput()
+  const [password, setPassword] = useInput()
   const [userStatus, changeStatus] = useUserStatus()
 
   function onLogin(email: string, password: string) {
@@ -39,11 +40,11 @@ function Login() {
     <Form>
       <Form.Group className="col-4">
         <Form.Label>Email address</Form.Label >
-        <Form.Control type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
+        <Form.Control type="email" placeholder="Enter email" value={email} onChange={setEmail} />
       </Form.Group >
       <Form.Group className="col-4">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+        <Form.Control type="password" placeholder="Password" value={password} onChange={setPassword} />
       </Form.Group>
       <Col>
         Do not have account? {<Link to="/register">Register now</Link>}

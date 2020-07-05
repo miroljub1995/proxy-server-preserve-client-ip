@@ -1,8 +1,8 @@
 import React from 'react'
 import Authenticated from './Authenticated'
+import { useLocation } from './CustomHooks'
 import './Home.css'
 import SaveCurrentLocation from './SaveCurrentLocation'
-import { useLocation } from './useLocation'
 
 function Home() {
   const [currentLocation] = useLocation()

@@ -4,7 +4,7 @@ import { cors, CORSConfig } from "https://deno.land/x/abc@v1.0.0-rc10/middleware
 import { Application } from "https://deno.land/x/abc@v1.0.0-rc10/mod.ts";
 import { getSavedLocations, loginUser, registerUser, saveCurrentLocation } from "./controllers.ts";
 import { AuthContext, authenticationMiddleware } from "./middlewares.ts";
-import { validateJwt } from "./utils.ts";
+import { getCurrentLocation } from "./utils.ts";
 
 const app = new Application()
 const config: CORSConfig = {
@@ -43,13 +43,17 @@ app
     const email = (c.customContext as AuthContext).email
     c.json({ email })
   }, authenticationMiddleware)
-  .get('/get-current-location', c => {
+  .get('/get-current-location', async c => {
     const clientAddress = c.request.conn.remoteAddr
     if (clientAddress.transport === 'tcp') {
       console.log('Client ip:', clientAddress.hostname)
+      const location = await getCurrentLocation(clientAddress)
+      if (location !== null) {
+        c.json({ location: `${location.city}, ${location.country}` })
+        return
+      }
     }
-    const location = 'Nis, Serbia'
-    c.json({ location })
+    c.response.status = Status.InternalServerError
   }, authenticationMiddleware)
   .post('/save-current-location', async c => {
     const { description } = await c.body() as { description: string }
