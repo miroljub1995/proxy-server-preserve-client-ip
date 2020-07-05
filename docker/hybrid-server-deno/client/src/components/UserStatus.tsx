@@ -59,14 +59,22 @@ const UserStatus: FC = ({ children }) => {
   const [status, dispatch] = useReducer(reducer, { isAuthenticated: false })
   const [loginChecked, setLoginChecked] = useState(false)
   const checkLogin = useCallback(async () => {
-    const res = await fetch(process.env.REACT_APP_API_ENDPOINT + '/check-login', {
-      credentials: 'include'
-    })
-    if (res.status === 200) {
-      const { email } = await res.json()
-      dispatch(login(email))
+    try {
+
+      const res = await fetch(process.env.REACT_APP_API_ENDPOINT + '/check-login', {
+        credentials: 'include'
+      })
+      if (res.status === 200) {
+        const { email } = await res.json()
+        dispatch(login(email))
+      }
     }
-    setLoginChecked(true)
+    catch (err) {
+      console.error(err)
+    }
+    finally {
+      setLoginChecked(true)
+    }
   }, [dispatch, setLoginChecked])
   useEffect(() => {
     checkLogin()

@@ -2,6 +2,8 @@
 
 # consts
 IMAGE_NAME='local/pspcip/hybrid-server-deno'
+IMAGE_NAME_C_DEV='local/pspcip/hybrid-server-deno-c-dev'
+IMAGE_NAME_S_DEV='local/pspcip/hybrid-server-deno-s-dev'
 
 case $1 in
 rebuild)

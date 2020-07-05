@@ -1,5 +1,5 @@
+import { Jose, makeJwt, Payload, setExpiration } from 'https://deno.land/x/djwt@v0.9.0/create.ts'
 import { validateJwt as validateJwtCore } from 'https://deno.land/x/djwt@v0.9.0/validate.ts'
-import { makeJwt, setExpiration, Jose, Payload } from 'https://deno.land/x/djwt@v0.9.0/create.ts'
 
 // TODO: load key from env
 const key = "this-is-my-secret"
@@ -19,4 +19,8 @@ export function generateJwt(email: string) {
 
 export async function validateJwt(jwt: string) {
   return validateJwtCore(jwt, key, { isThrowing: false })
+}
+
+export async function getCurrentLocation(ip: Deno.NetAddr) {
+
 }
