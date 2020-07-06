@@ -1,6 +1,7 @@
 import { Status } from "https://deno.land/std@0.57.0/http/mod.ts";
 import { Context } from "https://deno.land/x/abc@v1.0.0-rc10/context.ts";
-import { MiddlewareFunc } from "https://deno.land/x/abc@v1.0.0-rc10/types.ts";
+import { NotFoundException, UnauthorizedException } from "https://deno.land/x/abc@v1.0.0-rc10/mod.ts";
+import { HandlerFunc, MiddlewareFunc } from "https://deno.land/x/abc@v1.0.0-rc10/types.ts";
 import { validateJwt } from "./utils.ts";
 
 export const authenticationMiddleware: MiddlewareFunc = next => {
@@ -12,8 +13,8 @@ export const authenticationMiddleware: MiddlewareFunc = next => {
       return next(cContext)
     }
     else {
-      c.setCookie({ httpOnly: true, name: 'jwt_token', value: "", expires: new Date() })
-      c.response.status = Status.Unauthorized
+      c.setCookie({ httpOnly: true, name: 'jwt_token', value: "", expires: new Date(), sameSite: 'None', secure: true })
+      throw new UnauthorizedException()
     }
   }
 }
@@ -21,5 +22,19 @@ export const authenticationMiddleware: MiddlewareFunc = next => {
 export class AuthContext extends Context {
   constructor(c: Context, public email: string) {
     super(c)
+  }
+}
+
+export function fallbackToIndexHTML(next: HandlerFunc) {
+  return async (c: Context) => {
+    try {
+      return await Promise.resolve(next(c))
+    }
+    catch (e) {
+      if (e instanceof NotFoundException && !c.url.pathname.startsWith('/api')) {
+        return c.file('../client/index.html')
+      }
+      throw e
+    }
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Button, Col, Form } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom'
 import { useInput } from './CustomHooks'
@@ -9,7 +9,7 @@ function Login() {
   const [password, setPassword] = useInput()
   const [userStatus, changeStatus] = useUserStatus()
 
-  function onLogin(email: string, password: string) {
+  const handleLogin = useCallback(() => {
     console.log('logging in', email, password)
     fetch(process.env.REACT_APP_API_ENDPOINT + "/login", {
       method: 'POST',
@@ -28,7 +28,7 @@ function Login() {
           changeStatus(login(email))
         }
       })
-  }
+  }, [email, password, changeStatus])
 
   if (userStatus.isAuthenticated) {
     return (
@@ -50,7 +50,7 @@ function Login() {
         Do not have account? {<Link to="/register">Register now</Link>}
       </Col>
       <Col className="col">
-        <Button variant="primary" type="button" onClick={() => onLogin(email, password)}>Login</Button>
+        <Button variant="primary" type="button" onClick={handleLogin}>Login</Button>
       </Col>
     </Form >
   )
