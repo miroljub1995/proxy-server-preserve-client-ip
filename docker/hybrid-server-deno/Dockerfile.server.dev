@@ -1,7 +1,0 @@
-FROM hayd/alpine-deno:1.1.1
-
-WORKDIR /app/server
-COPY server/src .
-RUN deno cache index.ts
-EXPOSE 8080
-CMD [ "run", "--allow-net", "--allow-read", "index.ts" ]
