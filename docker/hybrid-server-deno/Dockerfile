@@ -15,19 +15,25 @@ RUN npm i && npm run build
 FROM hayd/alpine-deno:1.1.1
 
 # setup mmproxy
-RUN apk add iproute2
-WORKDIR /app/
+RUN apk add iproute2 supervisor
+WORKDIR /apps/mmproxy
 COPY --from=mm-builder /go/bin/go-mmproxy ./
 COPY allowed-networks.txt ./
 EXPOSE 8082
 
 # setup server
-COPY --from=client /app/build /app/client
-WORKDIR /app/server
+COPY --from=client /app/build /apps/client
+WORKDIR /apps/server
 COPY server/src .
 RUN deno cache --unstable index.ts
 # download mogno lib at image build, not at run
 RUN deno run --allow-net --allow-read --allow-write --allow-plugin --unstable https://deno.land/x/mongo@v0.8.0/mod.ts
 EXPOSE 8080
 ENV DB_URI='mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017,mongo-db-3.mongo-db:27017,mongo-db-4.mongo-db:27017/?replicaSet=repl-set0'
-CMD [ "run", "--allow-net", "--allow-read", "--allow-write", "--unstable", "--allow-plugin", "--allow-env", "index.ts" ]
+ADD supervisord.conf /etc/supervisor/conf.d/
+# CMD [ "run", "--allow-net", "--allow-read", "--allow-write", "--unstable", "--allow-plugin", "--allow-env", "index.ts" ]
+ENTRYPOINT [ "supervisord" ]
+CMD [ "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
+# WORKDIR /apps/mmproxy
+# ENTRYPOINT [ "./go-mmproxy" ]
+# CMD [ "-l", "0.0.0.0:8082", "-4", "127.0.0.1:8080", "-v", "2" ]
