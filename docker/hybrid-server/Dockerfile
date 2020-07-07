@@ -19,6 +19,7 @@ RUN apk add iproute2 supervisor
 WORKDIR /apps/mmproxy
 COPY --from=mm-builder /go/bin/go-mmproxy ./
 COPY allowed-networks.txt ./
+COPY mmproxy.sh ./
 EXPOSE 8082
 
 # setup server
