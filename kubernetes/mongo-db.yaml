@@ -51,7 +51,7 @@ spec:
       resources:
         requests:
           storage: 1Gi
-    storageClassName: local-storage
+      storageClassName: local-storage
 ---
 apiVersion: batch/v1
 kind: Job
