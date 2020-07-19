@@ -8,7 +8,7 @@ volumeBindingMode: WaitForFirstConsumer
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: local-pv
+  name: local-pv-1
 spec:
   storageClassName: local-storage
   capacity:
@@ -26,6 +26,157 @@ spec:
           operator: In
           values:
           - kubeworker1
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-2
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 3Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  local:
+    path: /pvdir
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
           - kubeworker2
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-3
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 3Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  local:
+    path: /pvdir
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
           - kubeworker3
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-4
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 3Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  local:
+    path: /pvdir
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - kubeworker4
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-1-backup
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 3Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  local:
+    path: /pvdir-backup
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - kubeworker1
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-2-backup
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 3Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  local:
+    path: /pvdir-backup
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - kubeworker2
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-3-backup
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 3Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  local:
+    path: /pvdir-backup
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - kubeworker3
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-pv-4-backup
+spec:
+  storageClassName: local-storage
+  capacity:
+    storage: 3Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  local:
+    path: /pvdir-backup
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
           - kubeworker4
