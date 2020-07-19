@@ -29,7 +29,7 @@ app
     const loginStatus = await loginUser(email, password)
     if (loginStatus) {
       const [jwtToken, exp] = loginStatus
-      c.setCookie({ httpOnly: true, name: 'jwt_token', value: jwtToken, expires: new Date(exp), sameSite: 'None', secure: true })
+      c.setCookie({ httpOnly: true, name: 'jwt_token', value: jwtToken, expires: new Date(exp), sameSite: 'None', secure: false })
       c.json({ email })
     }
     else {
