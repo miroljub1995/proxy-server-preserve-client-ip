@@ -39,19 +39,19 @@ spec:
         ports:
         - containerPort: 27017
           name: mongo
-        # volumeMounts:
-        # - name: mongo-volume
-        #   mountPath: /data/db
+        volumeMounts:
+        - name: mongo-volume
+          mountPath: /data/db
         postInstall:
-          
-#   volumeClaimTemplates:
-#   - metadata:
-#       name: mongo-volume
-#     spec:
-#       accessModes: [ "ReadWriteOnce" ]
-#       resources:
-#         requests:
-#           storage: 1Gi
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+    storageClassName: local-storage
 ---
 apiVersion: batch/v1
 kind: Job
