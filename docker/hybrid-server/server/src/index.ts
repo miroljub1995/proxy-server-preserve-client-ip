@@ -8,7 +8,7 @@ import { getCurrentLocation } from "./utils.ts";
 
 const app = new Application()
 const config: CORSConfig = {
-  allowOrigins: ["*", "http://localhost:3000", "http://localhost:8080"],
+  allowOrigins: ["*"],
   allowHeaders: [Header.ContentType, Header.Cookie, Header.SetCookie, Header.Accept, Header.Origin],
   allowMethods: [HttpMethod.Get, HttpMethod.Post, HttpMethod.Delete, HttpMethod.Put],
   allowCredentials: true
