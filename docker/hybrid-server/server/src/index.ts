@@ -59,8 +59,13 @@ app
   .post('/api/save-current-location', async c => {
     const { description } = await c.body() as { description: string }
     const email = (c.customContext as AuthContext).email
-    const location = 'Nis, Serbia'
-    const res = await saveCurrentLocation(email, location, description)
+    const clientAddress = c.request.conn.remoteAddr
+    if (clientAddress.transport !== 'tcp')
+      throw new InternalServerErrorException()
+    const location = await getCurrentLocation(clientAddress)
+    if (!location)
+      throw new InternalServerErrorException()
+    const res = await saveCurrentLocation(email, `${location.city}, ${location.country}`, description)
     if (res)
       c.response.status = Status.OK
     else
