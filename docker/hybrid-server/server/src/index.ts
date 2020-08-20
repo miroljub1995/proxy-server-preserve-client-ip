@@ -1,7 +1,7 @@
-import { Status } from "https://deno.land/std@0.57.0/http/mod.ts";
-import { Header, HttpMethod } from "https://deno.land/x/abc@v1.0.0-rc10/constants.ts";
-import { cors, CORSConfig } from "https://deno.land/x/abc@v1.0.0-rc10/middleware/cors.ts";
-import { Application, InternalServerErrorException, UnauthorizedException } from "https://deno.land/x/abc@v1.0.0-rc10/mod.ts";
+import { Status } from "std/http/mod.ts";
+import { Header, HttpMethod } from "abc/constants.ts";
+import { cors, CORSConfig } from "abc/middleware/cors.ts";
+import { Application, InternalServerErrorException, UnauthorizedException } from "abc/mod.ts";
 import { getSavedLocations, loginUser, registerUser, saveCurrentLocation } from "./controllers.ts";
 import { AuthContext, authenticationMiddleware, fallbackToIndexHTML } from "./middlewares.ts";
 import { getCurrentLocation } from "./utils.ts";

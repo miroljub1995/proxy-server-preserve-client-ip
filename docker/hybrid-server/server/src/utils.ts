@@ -1,6 +1,6 @@
-import { Status } from "https://deno.land/std@0.57.0/http/mod.ts";
-import { Jose, makeJwt, Payload, setExpiration } from 'https://deno.land/x/djwt@v0.9.0/create.ts';
-import { validateJwt as validateJwtCore } from 'https://deno.land/x/djwt@v0.9.0/validate.ts';
+import { Status } from "std/http/mod.ts";
+import { Jose, makeJwt, Payload, setExpiration } from 'djwt/create.ts';
+import { validateJwt as validateJwtCore } from 'djwt/validate.ts';
 
 // TODO: load key from env
 const key = "this-is-my-secret"

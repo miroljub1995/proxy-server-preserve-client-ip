@@ -1,6 +1,6 @@
-import { Context } from "https://deno.land/x/abc@v1.0.0-rc10/context.ts";
-import { NotFoundException, UnauthorizedException } from "https://deno.land/x/abc@v1.0.0-rc10/mod.ts";
-import { HandlerFunc, MiddlewareFunc } from "https://deno.land/x/abc@v1.0.0-rc10/types.ts";
+import { Context } from "abc/context.ts";
+import { NotFoundException, UnauthorizedException } from "abc/mod.ts";
+import { HandlerFunc, MiddlewareFunc } from "abc/types.ts";
 import { validateJwt } from "./utils.ts";
 
 export const authenticationMiddleware: MiddlewareFunc = next => {
