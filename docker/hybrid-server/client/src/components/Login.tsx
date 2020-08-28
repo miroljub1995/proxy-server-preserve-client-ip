@@ -14,13 +14,13 @@ function Login() {
     fetch(process.env.REACT_APP_API_ENDPOINT + "/login", {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       credentials: 'include',
       body: JSON.stringify({ email, password })
     })
       .then(async res => {
-        if (res.status === 401) {
+        if (res.status !== 200) {
           console.log('Failed to login')
         }
         else {
