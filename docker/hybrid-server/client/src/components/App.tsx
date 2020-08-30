@@ -1,12 +1,9 @@
-import React from 'react';
-import { Container } from 'react-bootstrap';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from './Home';
-import Login from './Login';
-import Navigation from './Navigation';
-import Register from './Register';
-import Saved from './Saved';
-import UserStatus from './UserStatus';
+import React from 'react'
+import { Container } from 'react-bootstrap'
+import { BrowserRouter as Router } from "react-router-dom"
+import Navigation from './Navigation'
+import Routes from './Routes'
+import UserStatus from './UserStatus'
 
 function App() {
   return (
@@ -14,23 +11,7 @@ function App() {
       <Router>
         <Navigation />
         <Container>
-          <Switch>
-            <Route path="/saved">
-              <Saved />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/account">
-              <p>Account</p>
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
+          <Routes />
         </Container>
       </Router>
     </UserStatus>
