@@ -32,8 +32,8 @@ export async function saveCurrentLocation(email: string, location: string, descr
 export async function getSavedLocations(email: string) {
   const db = dbClient()
   const users = db.collection('users')
-  const { locations } = await users.findOne({
+  const { locations } = (await users.findOne({
     email
-  }) as { locations: { location: string, description: string }[] }
-  return locations || []
+  }) || { locations: [] }) as { locations: string[] }
+  return locations
 }

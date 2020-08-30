@@ -4,9 +4,9 @@ import { Status } from "std/http/http_status.ts";
 import { loginUser, registerUser } from "../../controllers.ts";
 import { AuthContext, authenticationMiddleware } from "../../middlewares.ts";
 
-export default function addUserApi(app: Application) {
+export default function addUsersApi(app: Application) {
   app
-    .post('api/register', async c => {
+    .post('/api/register', async c => {
       const body = await c.body() as { email: string, password: string }
       const { email, password } = body
       registerUser(email, password)
