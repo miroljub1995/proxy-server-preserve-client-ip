@@ -3,9 +3,9 @@ import { useHistory } from "react-router-dom";
 
 export function useInput() {
   const [value, setValue] = useState('')
-  function setStateFromInput(e: React.ChangeEvent<HTMLInputElement>): void {
+  const setStateFromInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value)
-  }
+  }, [setValue])
   return [value, setStateFromInput] as const
 }
 
@@ -53,8 +53,8 @@ export function useLocation() {
 
 export function useModal() {
   const [show, setShow] = useState(false)
-  const handleHide = () => setShow(false)
-  const handleShow = () => setShow(true)
+  const handleHide = useCallback(() => setShow(false), [setShow])
+  const handleShow = useCallback(() => setShow(true), [setShow])
 
   return [show, handleShow, handleHide] as const
 }
