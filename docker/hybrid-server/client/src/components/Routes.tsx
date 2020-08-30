@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import Home from './Home'
 import Login from './Login'
+import NewHome from './NewHome'
 import Register from './Register'
 import Saved from './Saved'
 
@@ -20,7 +20,7 @@ const Routes: FC<{}> = () => (
       <p>Account</p>
     </Route>
     <Route path="/">
-      <Home />
+      <NewHome />
     </Route>
   </Switch>
 )

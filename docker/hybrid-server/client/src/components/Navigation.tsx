@@ -23,11 +23,10 @@ function Navigation() {
   }
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="/">Location saver</Navbar.Brand>
+      <Navbar.Brand href="/">Blog app</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link as={Link} to="/">Home</Nav.Link>
           <Nav.Link as={Link} to="/saved">Saved</Nav.Link>
         </Nav>
         <Nav>
