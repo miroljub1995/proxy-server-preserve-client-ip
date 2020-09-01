@@ -1,0 +1,14 @@
+.post-text {
+  height: 60px;
+  overflow: hidden;
+}
+
+.post-text:before {
+  content:'';
+  width:100%;
+  height:100%;    
+  position:absolute;
+  left:0;
+  top:0;
+  background:linear-gradient(transparent 100px, white);
+}

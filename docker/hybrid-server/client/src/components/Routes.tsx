@@ -4,6 +4,7 @@ import Login from './Login'
 import NewHome from './NewHome'
 import Register from './Register'
 import Saved from './Saved'
+import Post from './Post'
 
 const Routes: FC<{}> = () => (
   <Switch>
@@ -19,6 +20,7 @@ const Routes: FC<{}> = () => (
     <Route path="/account">
       <p>Account</p>
     </Route>
+    <Route path="/posts/:id" component={Post} />
     <Route path="/">
       <NewHome />
     </Route>

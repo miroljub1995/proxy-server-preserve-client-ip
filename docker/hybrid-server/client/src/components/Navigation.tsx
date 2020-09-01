@@ -1,11 +1,11 @@
 import React from 'react'
 import {
-  Navbar,
-  Nav,
+  Container, Nav, Navbar,
+
   NavDropdown
 } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
-import { useUserStatus, logout } from './UserStatus'
+import { logout, useUserStatus } from './UserStatus'
 
 function Navigation() {
   const [userStatus, setUserStatus] = useUserStatus()
@@ -23,21 +23,23 @@ function Navigation() {
   }
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="/">Blog app</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <Nav.Link as={Link} to="/saved">Saved</Nav.Link>
-        </Nav>
-        <Nav>
-          {userStatus.isAuthenticated || (<Nav.Link as={Link} to="/login">Login</Nav.Link>)}
-          {userStatus.isAuthenticated && (
-            <NavDropdown title={userStatus.email} id="basic-nav-dropdown">
-              {/* <NavDropdown.Item as={Link} to="/logout">Logout</NavDropdown.Item> */}
-              <NavDropdown.Item onClick={onLogout}>Logout</NavDropdown.Item>
-            </NavDropdown>)}
-        </Nav>
-      </Navbar.Collapse>
+      <Container>
+        <Navbar.Brand href="/">Home</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link as={Link} to="/saved">Saved</Nav.Link>
+          </Nav>
+          <Nav>
+            {userStatus.isAuthenticated || (<Nav.Link as={Link} to="/login">Login</Nav.Link>)}
+            {userStatus.isAuthenticated && (
+              <NavDropdown title={userStatus.email} id="basic-nav-dropdown">
+                {/* <NavDropdown.Item as={Link} to="/logout">Logout</NavDropdown.Item> */}
+                <NavDropdown.Item onClick={onLogout}>Logout</NavDropdown.Item>
+              </NavDropdown>)}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
   )
 }
