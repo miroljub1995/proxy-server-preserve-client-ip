@@ -28,7 +28,7 @@ function Navigation() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/saved">Saved</Nav.Link>
+            <Nav.Link as={Link} to="/create/post">Publish post</Nav.Link>
           </Nav>
           <Nav>
             {userStatus.isAuthenticated || (<Nav.Link as={Link} to="/login">Login</Nav.Link>)}

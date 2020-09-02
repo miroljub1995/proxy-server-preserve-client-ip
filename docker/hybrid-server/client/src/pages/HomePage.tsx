@@ -1,8 +1,8 @@
 import React from "react"
 import { Col, Row } from "react-bootstrap"
 import { useWhatsNew } from "../api/postsHooks"
-import PostList from "./PostList"
-import VerticalLine from './VerticalLine'
+import PostList from "../components/PostList"
+import VerticalLine from '../components/VerticalLine'
 
 
 export default () => {

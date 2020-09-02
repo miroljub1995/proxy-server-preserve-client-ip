@@ -5,7 +5,7 @@ import { getAllPosts, getWhatsHotPosts, getWhatsNewPosts, getPost } from '../pos
 export default function addPosts(app: Application) {
   app
     .get('/api/posts', getAllPosts)
-    .get('/api/posts/whats-new', getWhatsNewPosts)
-    .get('/api/posts/whats-hot', getWhatsHotPosts)
-    .get('/api/posts/:id', getPost)
+    .get('/api/posts/by/whats-new', getWhatsNewPosts)
+    .get('/api/posts/by/whats-hot', getWhatsHotPosts)
+    .get('/api/posts/by/id/:id', getPost)
 }

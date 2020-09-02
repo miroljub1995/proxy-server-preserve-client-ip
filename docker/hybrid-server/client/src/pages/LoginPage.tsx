@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
 import { Button, Col, Form } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom'
-import { useInput } from './CustomHooks'
-import { login, useUserStatus } from './UserStatus'
+import { useInput } from '../components/CustomHooks'
+import { login, useUserStatus } from '../components/UserStatus'
 
 function Login() {
   const [email, setEmail] = useInput()

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Button, Col, Form } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
-import { useInput } from './CustomHooks'
+import { useInput } from '../components/CustomHooks'
 
 function Register() {
   const [email, setEmail] = useInput()

@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
 import { ListGroup } from 'react-bootstrap'
 import { RouteComponentProps } from 'react-router-dom'
-import { usePost } from '../../api/postsHooks'
-import { useCommentsByPost } from '../../api/commentsHooks'
-import Comments, { CommentsPropType } from './Comments'
+import { usePost } from '../api/postsHooks'
+import { useCommentsByPost } from '../api/commentsHooks'
+import Comments, { CommentsPropType } from '../components/Post/Comments'
 
 export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const post = usePost(match.params.id)

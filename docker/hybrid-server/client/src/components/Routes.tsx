@@ -1,29 +1,23 @@
 import React, { FC } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import Login from './Login'
-import NewHome from './NewHome'
-import Register from './Register'
+import LoginPage from '../pages/LoginPage'
+import HomePage from '../pages/HomePage'
+import RegisterPage from '../pages/RegisterPage'
 import Saved from './Saved'
-import Post from './Post'
+import ViewPostPage from '../pages/ViewPostPage'
+import NewPostPage from '../pages/NewPostPage'
 
 const Routes: FC<{}> = () => (
   <Switch>
-    <Route path="/saved">
-      <Saved />
-    </Route>
-    <Route path="/login">
-      <Login />
-    </Route>
-    <Route path="/register">
-      <Register />
-    </Route>
+    <Route path="/saved" component={Saved} />
+    <Route path="/login" component={LoginPage} />
+    <Route path="/register" component={RegisterPage} />
     <Route path="/account">
       <p>Account</p>
     </Route>
-    <Route path="/posts/:id" component={Post} />
-    <Route path="/">
-      <NewHome />
-    </Route>
+    <Route path="/create/post" component={NewPostPage} />
+    <Route path="/posts/:id" component={ViewPostPage} />
+    <Route path="/" component={HomePage} />
   </Switch>
 )
 
