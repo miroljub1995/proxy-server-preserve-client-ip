@@ -20,7 +20,7 @@ export const useWhatsNew = () => {
 export const usePost = (id: Post["_id"]) => {
   const [post, setPost] = useState<Post | null>(null)
   const fetchPost = useCallback(async () => {
-    const res = await fetch(ApiEndpoints.posts(id))
+    const res = await fetch(ApiEndpoints.posts_by_id(id))
     const responseJson = await res.json()
     const data = PostSchema.cast(responseJson)
     setPost(data)

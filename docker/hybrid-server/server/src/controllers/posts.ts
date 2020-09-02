@@ -1,5 +1,6 @@
 import { HandlerFunc } from "abc/types.ts"
 import dbClient from '../database.ts'
+import { AuthContext } from "../middlewares.ts"
 
 interface PostSchema {
   _id: { $oid: string }
@@ -26,4 +27,13 @@ export const getPost: HandlerFunc = async c => {
   const db = dbClient()
   const post = await db.collection('posts').findOne({ _id: { $oid: c.params.id } }) as PostSchema
   c.json({ ...post, _id: post._id.$oid, author_id: post.author_id.$oid })
+}
+
+export const addPost: HandlerFunc = async c => {
+  const post = JSON.parse(await c.body())
+  const email = (c as AuthContext).email
+  const db = dbClient()
+  const { _id: author_id } = await db.collection('users').findOne({ email })
+  console.log(post)
+  db.collection('posts').insertOne({ ...post, author_id })
 }

@@ -22,7 +22,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
     return <></>
   return (
     post && <ListGroup key={post._id}>
-      <ListGroup.Item>
+      <ListGroup.Item className="mb-3">
         <h5>{post.title}</h5>
         <p>{post.text}</p>
       </ListGroup.Item>

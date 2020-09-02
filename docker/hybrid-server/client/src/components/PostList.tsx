@@ -9,11 +9,11 @@ export default ({ posts, title }: { posts: Post[], title: string }) => (
     <Col className="justify-content-center">
       <h5 className="mb-4 text-center">{title}</h5>
       {posts.map(e => (
-        <ListGroup className="my-3">
-          <Link to={`posts/${e._id}`} key={e._id} className="link">
+        <ListGroup key={e._id} className="my-3">
+          <Link to={`posts/${e._id}`} className="link">
             <ListGroup.Item>
               <h5>{e.title}</h5>
-              <p className="post-text">{e.text}</p>
+              <p className="post-text" dangerouslySetInnerHTML={{ __html: e.text }} />
             </ListGroup.Item>
           </Link>
         </ListGroup>

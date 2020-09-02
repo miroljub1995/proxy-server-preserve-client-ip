@@ -58,3 +58,13 @@ export function useModal() {
 
   return [show, handleShow, handleHide] as const
 }
+
+export function useEnterCallback<T>(cb: () => void) {
+  return useCallback((e: React.KeyboardEvent<T>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      cb()
+      return false
+    }
+  }, [cb])
+}
