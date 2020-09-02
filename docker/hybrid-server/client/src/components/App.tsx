@@ -4,6 +4,7 @@ import { HashRouter as Router } from "react-router-dom"
 import Navigation from './Navigation'
 import Routes from './Routes'
 import UserStatus from './UserStatus'
+import './Cursors.scss'
 
 function App() {
   return (

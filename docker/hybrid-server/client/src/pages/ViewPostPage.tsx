@@ -1,9 +1,10 @@
 import React, { useMemo } from 'react'
-import { ListGroup } from 'react-bootstrap'
-import { RouteComponentProps } from 'react-router-dom'
+import { ListGroup, Row } from 'react-bootstrap'
+import { RouteComponentProps, Link } from 'react-router-dom'
 import { usePost } from '../api/postsHooks'
 import { useCommentsByPost } from '../api/commentsHooks'
 import Comments, { CommentsPropType } from '../components/Post/Comments'
+import Authenticated from '../components/Authenticated'
 
 export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const post = usePost(match.params.id)
@@ -23,7 +24,17 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
   return (
     post && <ListGroup key={post._id}>
       <ListGroup.Item className="mb-3">
-        <h5>{post.title}</h5>
+        <div className="d-flex justify-content-between">
+          <h5>{post.title}</h5>
+          <Authenticated>
+            <div>
+              <Link to={`/edit/post/${post._id}`}>
+                <i className="fas fa-2x mx-2 fa-edit text-warning"></i>
+              </Link>
+              <i className="fas fa-2x mx-2 fa-trash text-danger cursor-pointer"></i>
+            </div>
+          </Authenticated>
+        </div>
         <p>{post.text}</p>
       </ListGroup.Item>
       <Comments comments={connectedComments} />

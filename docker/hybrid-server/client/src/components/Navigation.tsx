@@ -6,6 +6,7 @@ import {
 } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import { logout, useUserStatus } from './UserStatus'
+import Authenticated from './Authenticated'
 
 function Navigation() {
   const [userStatus, setUserStatus] = useUserStatus()
@@ -28,7 +29,9 @@ function Navigation() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/create/post">Publish post</Nav.Link>
+            <Authenticated>
+              <Nav.Link as={Link} to="/create/post">Publish post</Nav.Link>
+            </Authenticated>
           </Nav>
           <Nav>
             {userStatus.isAuthenticated || (<Nav.Link as={Link} to="/login">Login</Nav.Link>)}

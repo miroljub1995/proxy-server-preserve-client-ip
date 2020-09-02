@@ -21,7 +21,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
     <Col>
       <PostEditor titleState={[title, setTitle]} textState={[text, setText]} />
       <div className="d-flex justify-content-center mt-3">
-        <Button>Edit</Button>
+        <Button>Save</Button>
       </div>
     </Col>
   )
