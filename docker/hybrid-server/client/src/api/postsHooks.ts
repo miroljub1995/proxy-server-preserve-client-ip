@@ -27,6 +27,6 @@ export const usePost = (id: Post["_id"]) => {
   }, [setPost, id])
   useEffect(() => {
     fetchPost()
-  })
+  }, [fetchPost])
   return post
 }
