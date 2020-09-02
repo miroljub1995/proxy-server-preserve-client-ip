@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { Button, Col, Form } from 'react-bootstrap'
+import { Col, Form } from 'react-bootstrap'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 
@@ -18,9 +18,6 @@ export default function EditPost({ titleState: [title, setTitle], textState: [te
         </Form.Group>
       </Form>
       <ReactQuill value={text} onChange={e => setText(e)} />
-      <div className="d-flex justify-content-center mt-3">
-        <Button>Publish</Button>
-      </div>
     </Col>
   )
 }

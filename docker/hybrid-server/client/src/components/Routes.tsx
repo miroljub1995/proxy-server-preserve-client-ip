@@ -6,6 +6,7 @@ import RegisterPage from '../pages/RegisterPage'
 import Saved from './Saved'
 import ViewPostPage from '../pages/ViewPostPage'
 import NewPostPage from '../pages/NewPostPage'
+import EditPostPage from '../pages/EditPostPage'
 
 const Routes: FC<{}> = () => (
   <Switch>
@@ -17,6 +18,7 @@ const Routes: FC<{}> = () => (
     </Route>
     <Route path="/create/post" component={NewPostPage} />
     <Route path="/posts/:id" component={ViewPostPage} />
+    <Route path="/edit/post/:id" component={EditPostPage} />
     <Route path="/" component={HomePage} />
   </Switch>
 )
