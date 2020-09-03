@@ -7,5 +7,6 @@ export const ApiEndpoints = {
   posts_by_id: (id: string) => `${POSTS_API_URL.href}/by/id/${id}`,
   posts: `${POSTS_API_URL.href}`,
 
+  comments: COMMENTS_API_URL.href,
   comments_by_post_id: (id: string) => `${COMMENTS_API_URL.href}/by/post_id/${id}`
 }

@@ -20,7 +20,7 @@ export default function NewPost() {
     history.push('/posts')
   }, [history, title, text])
   return (
-    <Authenticated>
+    <Authenticated redirect>
       <Col>
         <PostEditor titleState={[title, setTitle]} textState={[text, setText]} />
         <div className="d-flex justify-content-center mt-3">

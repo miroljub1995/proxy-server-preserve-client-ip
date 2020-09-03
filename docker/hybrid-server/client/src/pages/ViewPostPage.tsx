@@ -1,16 +1,18 @@
-import React, { useMemo, useCallback } from 'react'
-import { ListGroup } from 'react-bootstrap'
+import React, { useCallback, useState } from 'react'
+import { Col, ListGroup } from 'react-bootstrap'
 import { Link, RouteComponentProps, useHistory } from 'react-router-dom'
+import TextareaAutosize from 'react-textarea-autosize'
 import { useCommentsByPost } from '../api/commentsHooks'
+import { ApiEndpoints } from '../api/endpoints'
 import { usePost } from '../api/postsHooks'
 import Authenticated from '../components/Authenticated'
-import Comments, { CommentsPropType } from '../components/Post/Comments'
+import { useEnterCallback } from '../components/CustomHooks'
 import DeleteButton from '../components/DeleteButton'
-import { ApiEndpoints } from '../api/endpoints'
+import Comments from '../components/Post/Comments'
 
 export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const post = usePost(match.params.id)
-  const comments = useCommentsByPost(post?._id)
+  const [comments, fetchAgainComments] = useCommentsByPost(post?._id)
 
   const history = useHistory()
   const onDelete = useCallback(async () => {
@@ -22,6 +24,21 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
       history.push('/posts')
     }
   }, [post, history])
+
+  const [newComment, setNewComment] = useState('')
+  const handleEnterOnComment = useEnterCallback(
+    useCallback(async () => {
+      if (post) {
+        await fetch(ApiEndpoints.comments, {
+          method: 'POST',
+          credentials: 'include',
+          body: JSON.stringify({ text: newComment, post_id: post._id })
+        })
+        fetchAgainComments()
+        setNewComment('')
+      }
+    }, [post, newComment, fetchAgainComments, setNewComment])
+  )
 
   if (post === null)
     return <></>
@@ -41,6 +58,11 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
         </div>
         <p>{post.text}</p>
       </ListGroup.Item>
+      <Authenticated>
+        <Col className="col-6">
+          <TextareaAutosize className="write-comment p-2" value={newComment} onChange={e => setNewComment(e.target.value)} placeholder="Comment" onKeyPress={handleEnterOnComment} />
+        </Col>
+      </Authenticated>
       <Comments comments={comments} />
     </ListGroup>
   )
