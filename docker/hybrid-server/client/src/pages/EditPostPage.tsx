@@ -21,9 +21,9 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
 
   const onSave = useCallback(async () => {
     if (post) {
-      await fetch(ApiEndpoints.posts, {
+      await fetch(ApiEndpoints.posts_by_id(post._id), {
         method: 'PUT',
-        body: JSON.stringify({ _id: post._id, title, text }),
+        body: JSON.stringify({ title, text }),
         credentials: 'include'
       })
       history.push('/posts')

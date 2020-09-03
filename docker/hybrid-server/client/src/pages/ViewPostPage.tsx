@@ -1,11 +1,12 @@
 import React, { useMemo, useCallback } from 'react'
 import { ListGroup } from 'react-bootstrap'
-import { Link, RouteComponentProps } from 'react-router-dom'
+import { Link, RouteComponentProps, useHistory } from 'react-router-dom'
 import { useCommentsByPost } from '../api/commentsHooks'
 import { usePost } from '../api/postsHooks'
 import Authenticated from '../components/Authenticated'
 import Comments, { CommentsPropType } from '../components/Post/Comments'
 import DeleteButton from '../components/DeleteButton'
+import { ApiEndpoints } from '../api/endpoints'
 
 export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const post = usePost(match.params.id)
@@ -21,9 +22,16 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
     return Object.entries(rootsDic).map(([k, v]) => v)
   }, [comments])
 
+  const history = useHistory()
   const onDelete = useCallback(async () => {
-    console.log("On delete")
-  }, [post])
+    if (post) {
+      await fetch(ApiEndpoints.posts_by_id(post._id), {
+        method: 'DELETE',
+        credentials: 'include'
+      })
+      history.push('/posts')
+    }
+  }, [post, history])
 
   if (post === null)
     return <></>

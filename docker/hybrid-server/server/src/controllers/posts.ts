@@ -38,17 +38,18 @@ export const addPost: HandlerFunc = async c => {
 }
 
 export const editPost: HandlerFunc = async c => {
+  const _id = { $oid: c.params.id }
   const post = JSON.parse(await c.body())
   const email = (c as AuthContext).email
   const db = dbClient()
   const { _id: author_id } = await db.collection('users').findOne({ email })
-  await db.collection('posts').updateOne({ _id: { $oid: post._id }, author_id }, { $set: { text: post.text, title: post.title } })
+  await db.collection('posts').updateOne({ _id, author_id }, { $set: { text: post.text, title: post.title } })
 }
 
 export const deletePost: HandlerFunc = async c => {
-  const post = JSON.parse(await c.body())
+  const _id = { $oid: c.params.id }
   const email = (c as AuthContext).email
   const db = dbClient()
   const { _id: author_id } = await db.collection('users').findOne({ email })
-  await db.collection('posts').deleteOne({ _id: { $oid: post._id }, author_id })
+  await db.collection('posts').deleteOne({ _id, author_id })
 }

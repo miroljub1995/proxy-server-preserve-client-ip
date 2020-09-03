@@ -12,7 +12,7 @@ export default function addPosts(app: Application) {
 
     .post('/api/posts', addPost, authenticationMiddleware)
 
-    .put('/api/posts', editPost, authenticationMiddleware)
+    .put('/api/posts/by/id/:id', editPost, authenticationMiddleware)
 
-    .delete('/api/posts', deletePost, authenticationMiddleware)
+    .delete('/api/posts/by/id/:id', deletePost, authenticationMiddleware)
 }
