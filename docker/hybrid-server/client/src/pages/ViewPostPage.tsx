@@ -11,16 +11,6 @@ import { ApiEndpoints } from '../api/endpoints'
 export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const post = usePost(match.params.id)
   const comments = useCommentsByPost(post?._id)
-  const connectedComments = useMemo(() => {
-    const rootsDic: { [key: string]: CommentsPropType["comments"][0] } = {}
-    comments.filter(c => !c.parent_id).forEach(e => {
-      rootsDic[e._id] = { _id: e._id, text: e.text, children: [] }
-    })
-    comments.filter(c => c.parent_id).forEach(e => {
-      rootsDic[e.parent_id!].children.push({ _id: e._id, text: e.text })
-    })
-    return Object.entries(rootsDic).map(([k, v]) => v)
-  }, [comments])
 
   const history = useHistory()
   const onDelete = useCallback(async () => {
@@ -51,7 +41,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
         </div>
         <p>{post.text}</p>
       </ListGroup.Item>
-      <Comments comments={connectedComments} />
+      <Comments comments={comments} />
     </ListGroup>
   )
 }

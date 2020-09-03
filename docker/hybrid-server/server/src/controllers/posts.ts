@@ -34,7 +34,7 @@ export const addPost: HandlerFunc = async c => {
   const email = (c as AuthContext).email
   const db = dbClient()
   const { _id: author_id } = await db.collection('users').findOne({ email })
-  await db.collection('posts').insertOne({ ...post, author_id })
+  await db.collection('posts').insertOne({ ...post, author_id, date_created: new Date().getTime() })
 }
 
 export const editPost: HandlerFunc = async c => {
