@@ -9,6 +9,7 @@ import Authenticated from '../components/Authenticated'
 import { useEnterCallback } from '../components/CustomHooks'
 import DeleteButton from '../components/DeleteButton'
 import Comments from '../components/Post/Comments'
+import { useUserStatus } from '../components/UserStatus'
 
 export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const post = usePost(match.params.id)
@@ -40,6 +41,8 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
     }, [post, newComment, fetchAgainComments, setNewComment])
   )
 
+  const [userStatus] = useUserStatus()
+
   if (post === null)
     return <></>
   return (
@@ -48,12 +51,14 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
         <div className="d-flex justify-content-between">
           <h5>{post.title}</h5>
           <Authenticated>
-            <div>
-              <Link to={`/edit/post/${post._id}`}>
-                <i className="fas fa-2x mx-2 fa-edit text-warning"></i>
-              </Link>
-              <DeleteButton onDelete={onDelete} />
-            </div>
+            {userStatus.user?._id === post.author_id && (
+              <div>
+                <Link to={`/edit/post/${post._id}`}>
+                  <i className="fas fa-2x mx-2 fa-edit text-warning"></i>
+                </Link>
+                <DeleteButton onDelete={onDelete} />
+              </div>)
+            }
           </Authenticated>
         </div>
         <p>{post.text}</p>
