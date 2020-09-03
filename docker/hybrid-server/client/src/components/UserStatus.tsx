@@ -2,7 +2,10 @@ import React, { createContext, Dispatch, FC, useCallback, useContext, useEffect,
 
 interface IUserStatus {
   isAuthenticated: boolean
-  email?: string
+  user?: {
+    _id: string,
+    email: string
+  }
 }
 
 const LOGIN = 'LOGIN'
@@ -10,7 +13,7 @@ const LOGOUT = 'LOGOUT'
 
 interface LoginAction {
   type: typeof LOGIN
-  payload: { email: string }
+  payload: { _id: string, email: string }
 }
 
 interface LogoutAction {
@@ -19,10 +22,10 @@ interface LogoutAction {
 
 type ActionTypes = LoginAction | LogoutAction
 
-export function login(email: string): LoginAction {
+export function login(info: { _id: string, email: string }): LoginAction {
   return {
     type: LOGIN,
-    payload: { email }
+    payload: info
   }
 }
 
@@ -38,13 +41,13 @@ const reducer = (state: IUserStatus, action: ActionTypes): IUserStatus => {
       return {
         ...state,
         isAuthenticated: true,
-        email: action.payload.email
+        user: action.payload
       }
     case LOGOUT:
       return {
         ...state,
         isAuthenticated: false,
-        email: undefined
+        user: undefined
       }
   }
 };
@@ -65,8 +68,8 @@ const UserStatus: FC = ({ children }) => {
         credentials: 'include'
       })
       if (res.status === 200) {
-        const { email } = await res.json()
-        dispatch(login(email))
+        const { email, _id } = await res.json()
+        dispatch(login({ email, _id }))
       }
     }
     catch (err) {

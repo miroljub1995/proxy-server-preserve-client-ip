@@ -3,6 +3,7 @@ import { Button, Col, Form } from 'react-bootstrap'
 import { Link, Redirect } from 'react-router-dom'
 import { useInput } from '../components/CustomHooks'
 import { login, useUserStatus } from '../components/UserStatus'
+import { UserSchema } from '../api/types'
 
 function Login() {
   const [email, setEmail] = useInput()
@@ -24,8 +25,8 @@ function Login() {
           console.log('Failed to login')
         }
         else {
-          const { email } = await res.json() as { email: string }
-          changeStatus(login(email))
+          const userInfo = UserSchema.cast(await res.json())
+          changeStatus(login(userInfo))
         }
       })
   }, [email, password, changeStatus])

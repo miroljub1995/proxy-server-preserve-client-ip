@@ -3,6 +3,7 @@ import { UnauthorizedException } from "abc/mod.ts";
 import { Status } from "std/http/http_status.ts";
 import { loginUser, registerUser } from "../../controllers.ts";
 import { AuthContext, authenticationMiddleware } from "../../middlewares.ts";
+import dbClient from "../../database.ts";
 
 export default function addUsersApi(app: Application) {
   app
@@ -18,7 +19,9 @@ export default function addUsersApi(app: Application) {
       if (loginStatus) {
         const [jwtToken, exp] = loginStatus
         c.setCookie({ httpOnly: true, name: 'jwt_token', value: jwtToken, expires: new Date(exp), sameSite: 'None', secure: false })
-        c.json({ email })
+        const db = dbClient()
+        const { _id } = await db.collection('users').findOne({ email })
+        c.json({ email, _id: _id.$oid })
       }
       else {
         throw new UnauthorizedException()
@@ -30,6 +33,8 @@ export default function addUsersApi(app: Application) {
     })
     .get('/api/check-login', async c => {
       const email = (c.customContext as AuthContext).email
-      c.json({ email })
+      const db = dbClient()
+      const { _id } = await db.collection('users').findOne({ email })
+      c.json({ email, _id: _id.$oid })
     }, authenticationMiddleware)
 }

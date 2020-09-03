@@ -36,7 +36,7 @@ function Navigation() {
           <Nav>
             {userStatus.isAuthenticated || (<Nav.Link as={Link} to="/login">Login</Nav.Link>)}
             {userStatus.isAuthenticated && (
-              <NavDropdown title={userStatus.email} id="basic-nav-dropdown">
+              <NavDropdown title={userStatus.user!.email} id="basic-nav-dropdown">
                 {/* <NavDropdown.Item as={Link} to="/logout">Logout</NavDropdown.Item> */}
                 <NavDropdown.Item onClick={onLogout}>Logout</NavDropdown.Item>
               </NavDropdown>)}
