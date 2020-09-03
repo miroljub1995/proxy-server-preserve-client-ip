@@ -17,7 +17,7 @@ export const useCommentsByPost = (id: Comment['post_id'] | undefined) => {
   useEffect(() => {
     setNeedFetch(false)
     fetchComment()
-  }, [fetchComment, needFetch])
+  }, [fetchComment, setNeedFetch, needFetch])
 
   const invalidate = useCallback(() => setNeedFetch(true), [setNeedFetch])
   return [comments, invalidate] as const
