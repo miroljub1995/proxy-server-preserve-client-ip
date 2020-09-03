@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react'
-import { ListGroup, Row } from 'react-bootstrap'
-import { RouteComponentProps, Link } from 'react-router-dom'
-import { usePost } from '../api/postsHooks'
+import React, { useMemo, useCallback } from 'react'
+import { ListGroup } from 'react-bootstrap'
+import { Link, RouteComponentProps } from 'react-router-dom'
 import { useCommentsByPost } from '../api/commentsHooks'
-import Comments, { CommentsPropType } from '../components/Post/Comments'
+import { usePost } from '../api/postsHooks'
 import Authenticated from '../components/Authenticated'
+import Comments, { CommentsPropType } from '../components/Post/Comments'
+import DeleteButton from '../components/DeleteButton'
 
 export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const post = usePost(match.params.id)
@@ -19,6 +20,11 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
     })
     return Object.entries(rootsDic).map(([k, v]) => v)
   }, [comments])
+
+  const onDelete = useCallback(async () => {
+    console.log("On delete")
+  }, [post])
+
   if (post === null)
     return <></>
   return (
@@ -31,7 +37,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
               <Link to={`/edit/post/${post._id}`}>
                 <i className="fas fa-2x mx-2 fa-edit text-warning"></i>
               </Link>
-              <i className="fas fa-2x mx-2 fa-trash text-danger cursor-pointer"></i>
+              <DeleteButton onDelete={onDelete} />
             </div>
           </Authenticated>
         </div>

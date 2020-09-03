@@ -1,5 +1,5 @@
 import { Application } from "abc/app.ts";
-import { getAllPosts, getWhatsHotPosts, getWhatsNewPosts, getPost, addPost } from '../posts.ts';
+import { getAllPosts, getWhatsHotPosts, getWhatsNewPosts, getPost, addPost, editPost, deletePost } from '../posts.ts';
 import { authenticationMiddleware } from "../../middlewares.ts";
 
 
@@ -11,4 +11,8 @@ export default function addPosts(app: Application) {
     .get('/api/posts/by/id/:id', getPost)
 
     .post('/api/posts', addPost, authenticationMiddleware)
+
+    .put('/api/posts', editPost, authenticationMiddleware)
+
+    .delete('/api/posts', deletePost, authenticationMiddleware)
 }
