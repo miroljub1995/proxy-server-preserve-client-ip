@@ -22,7 +22,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
         method: 'DELETE',
         credentials: 'include'
       })
-      history.push('/posts')
+      history.push('/')
     }
   }, [post, history])
 

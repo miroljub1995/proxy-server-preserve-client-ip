@@ -17,7 +17,7 @@ export default function NewPost() {
       body: JSON.stringify({ title, text }),
       credentials: 'include'
     })
-    history.push('/posts')
+    history.push('/')
   }, [history, title, text])
   return (
     <Authenticated redirect>
