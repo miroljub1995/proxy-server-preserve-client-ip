@@ -30,3 +30,19 @@ export const usePost = (id: Post["_id"]) => {
   }, [fetchPost])
   return post
 }
+
+export const usePostsByMe = () => {
+  const [posts, setPosts] = useState<Post[]>([])
+  const fetchPost = useCallback(async () => {
+    const res = await fetch(ApiEndpoints.posts_by_me, {
+      credentials: 'include'
+    })
+    const responseJson = await res.json()
+    const data = t.array(PostSchema).cast(responseJson)
+    setPosts(data)
+  }, [setPosts])
+  useEffect(() => {
+    fetchPost()
+  }, [fetchPost])
+  return posts
+}

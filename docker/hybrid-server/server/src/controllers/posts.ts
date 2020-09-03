@@ -29,6 +29,14 @@ export const getPost: HandlerFunc = async c => {
   c.json({ ...post, _id: post._id.$oid, author_id: post.author_id.$oid })
 }
 
+export const getPostsByMe: HandlerFunc = async c => {
+  const email = (c as AuthContext).email
+  const db = dbClient()
+  const { _id: author_id } = await db.collection('users').findOne({ email })
+  const posts = (await db.collection('posts').find({ author_id: author_id }) || []) as PostSchema[]
+  c.json(posts.map(post => ({ ...post, _id: post._id.$oid, author_id: post.author_id.$oid })))
+}
+
 export const addPost: HandlerFunc = async c => {
   const post = JSON.parse(await c.body())
   const email = (c as AuthContext).email

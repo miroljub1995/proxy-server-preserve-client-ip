@@ -26,7 +26,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
         body: JSON.stringify({ title, text }),
         credentials: 'include'
       })
-      history.push('/posts')
+      history.push('/')
     }
   }, [post, title, text, history])
 

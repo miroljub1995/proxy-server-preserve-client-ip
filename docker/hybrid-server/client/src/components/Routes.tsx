@@ -7,6 +7,7 @@ import Saved from './Saved'
 import ViewPostPage from '../pages/ViewPostPage'
 import NewPostPage from '../pages/NewPostPage'
 import EditPostPage from '../pages/EditPostPage'
+import MyPostsPage from '../pages/MyPostsPage'
 
 const Routes: FC<{}> = () => (
   <Switch>
@@ -19,7 +20,8 @@ const Routes: FC<{}> = () => (
     <Route path="/create/post" component={NewPostPage} />
     <Route path="/posts/:id" component={ViewPostPage} />
     <Route path="/edit/post/:id" component={EditPostPage} />
-    <Route path="/" component={HomePage} />
+    <Route path="/my/posts" component={MyPostsPage} />
+    <Route exact path="/" component={HomePage} />
   </Switch>
 )
 

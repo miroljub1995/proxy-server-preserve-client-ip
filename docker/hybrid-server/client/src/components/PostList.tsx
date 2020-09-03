@@ -10,7 +10,7 @@ export default ({ posts, title }: { posts: Post[], title: string }) => (
       <h5 className="mb-4 text-center">{title}</h5>
       {posts.map(e => (
         <ListGroup key={e._id} className="my-3">
-          <Link to={`posts/${e._id}`} className="link">
+          <Link to={`/posts/${e._id}`} className="link">
             <ListGroup.Item>
               <h5>{e.title}</h5>
               <p className="post-text" dangerouslySetInnerHTML={{ __html: e.text }} />
