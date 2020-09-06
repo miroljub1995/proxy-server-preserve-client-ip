@@ -11,7 +11,7 @@ export default function ({ onDelete }: { onDelete: () => void }) {
   }, [setShowModal, onDelete])
   return (
     <>
-      <i onClick={handleShowModal}>
+      <i data-toggle="tooltip" title="Delete post" onClick={handleShowModal}>
         <i className="fas fa-2x mx-2 fa-trash text-danger cursor-pointer"></i>
       </i>
       <Modal show={showModal} onHide={handleHideModal}>

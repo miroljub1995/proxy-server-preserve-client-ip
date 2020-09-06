@@ -10,6 +10,8 @@ import { useEnterCallback } from '../components/CustomHooks'
 import DeleteButton from '../components/DeleteButton'
 import Comments from '../components/Post/Comments'
 import { useUserStatus } from '../components/UserStatus'
+import PostText from '../components/PostText'
+import ViewsButton from '../components/ViewsButton'
 
 export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const post = usePost(match.params.id)
@@ -53,7 +55,8 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
           <Authenticated>
             {userStatus.user?._id === post.author_id && (
               <div>
-                <Link to={`/edit/post/${post._id}`}>
+                <ViewsButton post_id={post._id} />
+                <Link data-toggle="tooltip" title="Edit post" to={`/edit/post/${post._id}`}>
                   <i className="fas fa-2x mx-2 fa-edit text-warning"></i>
                 </Link>
                 <DeleteButton onDelete={onDelete} />
@@ -61,7 +64,7 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
             }
           </Authenticated>
         </div>
-        <p>{post.text}</p>
+        <PostText text={post.text} />
       </ListGroup.Item>
       <Authenticated>
         <Col className="col-6">

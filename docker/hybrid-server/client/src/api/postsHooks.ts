@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
+import t from 'runtime-cast'
 import { ApiEndpoints } from './endpoints'
 import { Post, PostSchema } from './types'
-import t from 'runtime-cast'
 
 export const useWhatsNew = () => {
   const [posts, setPosts] = useState<Post[]>([])

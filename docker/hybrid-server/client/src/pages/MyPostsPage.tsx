@@ -6,7 +6,7 @@ import PostList from '../components/PostList'
 const ValidatedMyPostsPage = () => {
   const posts = usePostsByMe()
   return (
-    <PostList posts={posts} title="My posts" />
+    <PostList posts={posts} />
   )
 }
 

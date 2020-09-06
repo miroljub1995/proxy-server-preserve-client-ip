@@ -23,3 +23,9 @@ export const UserSchema = t.object({
   email: t.string()
 })
 export type User = TypeOf<typeof UserSchema>
+
+export const ViewSchema = t.object({
+  _id: t.string(),
+  value: t.number()
+})
+export type View = TypeOf<typeof ViewSchema>
