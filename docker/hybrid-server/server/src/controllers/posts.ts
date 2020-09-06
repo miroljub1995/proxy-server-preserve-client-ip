@@ -60,4 +60,5 @@ export const deletePost: HandlerFunc = async c => {
   const db = dbClient()
   const { _id: author_id } = await db.collection('users').findOne({ email })
   await db.collection('posts').deleteOne({ _id, author_id })
+  await db.collection('views').deleteMany({ "_id.post_id": _id })
 }

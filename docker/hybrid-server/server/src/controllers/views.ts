@@ -1,6 +1,5 @@
 import { HandlerFunc } from "abc/types.ts"
 import dbClient from '../database.ts'
-import { AuthContext } from "../middlewares.ts"
 
 interface ViewSchema {
   _id: { post_id: { $oid: string }, country: string }
