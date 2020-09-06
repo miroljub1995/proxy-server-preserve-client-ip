@@ -2,6 +2,7 @@ import { HandlerFunc } from "abc/types.ts"
 import dbClient from '../database.ts'
 import type { AuthContext } from "../middlewares.ts"
 import type { ViewSchema } from './views.ts'
+import { getCurrentLocation } from "../utils.ts"
 
 interface PostSchema {
   _id: { $oid: string }
@@ -36,6 +37,20 @@ export const getWhatsHotPosts: HandlerFunc = async c => {
 export const getPost: HandlerFunc = async c => {
   const db = dbClient()
   const post = await db.collection('posts').findOne({ _id: { $oid: c.params.id } }) as PostSchema
+  if (c.request.conn.remoteAddr.transport === 'tcp') {
+    const res = await getCurrentLocation(c.request.conn.remoteAddr)
+    if (res) {
+      const db = dbClient()
+      const viewId = { post_id: post._id, country: res.country }
+      const view = await db.collection('views').findOne({ _id: viewId })
+      if (view) {
+        await db.collection('views').updateOne({ _id: viewId }, { $inc: { count: 1 } })
+      }
+      else {
+        await db.collection('views').insertOne({ _id: viewId, count: 1 })
+      }
+    }
+  }
   c.json({ ...post, _id: post._id.$oid, author_id: post.author_id.$oid })
 }
 
