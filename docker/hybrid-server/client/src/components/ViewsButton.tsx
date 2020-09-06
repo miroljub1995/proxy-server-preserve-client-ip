@@ -8,6 +8,7 @@ export default ({ post_id }: { post_id: string }) => {
   const [modalOpen, setModalOpen] = useState(false)
   const views = useViewsByPostId(post_id)
   const viewsForPie = useMemo(() => views.map(e => ({ id: e._id, label: e._id, value: e.value })), [views])
+  const totalViews = useMemo(() => views.reduce((p, c) => p + c.value, 0), [views])
 
   return (
     <>
@@ -16,7 +17,7 @@ export default ({ post_id }: { post_id: string }) => {
       </i>
       <Modal show={modalOpen} onHide={() => setModalOpen(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Views</Modal.Title>
+          <Modal.Title>Views in total: {totalViews}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="views-modal">
           <ResponsivePie
