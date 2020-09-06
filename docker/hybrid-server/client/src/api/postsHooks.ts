@@ -17,6 +17,20 @@ export const useWhatsNew = () => {
   return posts
 }
 
+export const useWhatsHot = () => {
+  const [posts, setPosts] = useState<Post[]>([])
+  const fetchNewPosts = useCallback(async () => {
+    const res = await fetch(ApiEndpoints.posts_whatsHot)
+    const responseJson = await res.json()
+    const data = t.array(PostSchema).cast(responseJson)
+    setPosts(data)
+  }, [setPosts])
+  useEffect(() => {
+    fetchNewPosts()
+  }, [fetchNewPosts])
+  return posts
+}
+
 export const usePost = (id: Post["_id"]) => {
   const [post, setPost] = useState<Post | null>(null)
   const fetchPost = useCallback(async () => {

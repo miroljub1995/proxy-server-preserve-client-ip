@@ -1,7 +1,7 @@
 import { HandlerFunc } from "abc/types.ts"
 import dbClient from '../database.ts'
 
-interface ViewSchema {
+export interface ViewSchema {
   _id: { post_id: { $oid: string }, country: string }
   count: number
 }

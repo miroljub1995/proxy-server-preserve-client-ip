@@ -1,26 +1,36 @@
 import { HandlerFunc } from "abc/types.ts"
 import dbClient from '../database.ts'
-import { AuthContext } from "../middlewares.ts"
+import type { AuthContext } from "../middlewares.ts"
+import type { ViewSchema } from './views.ts'
 
 interface PostSchema {
   _id: { $oid: string }
   title: string
   text: string
-  author_id: { $oid: string }
-}
-
-export const getAllPosts: HandlerFunc = async c => {
-  const db = dbClient()
-  const posts = (await db.collection('posts').find() || []) as PostSchema[]
-  c.json(posts.map(e => ({ ...e, _id: e._id.$oid, author_id: e.author_id.$oid })))
+  author_id: { $oid: string },
+  date_created: number
 }
 
 export const getWhatsNewPosts: HandlerFunc = async c => {
-  return await getAllPosts(c)
+  const db = dbClient()
+  const posts = (await db.collection('posts').find() || []) as PostSchema[]
+  c.json(posts.sort((a, b) => b.date_created - a.date_created).slice(0, 10).map(e => ({ ...e, _id: e._id.$oid, author_id: e.author_id.$oid })))
 }
 
 export const getWhatsHotPosts: HandlerFunc = async c => {
-  return await getAllPosts(c)
+  const db = dbClient()
+  const views = (await db.collection('views').find() || []) as ViewSchema[]
+  const viewsByPostId = new Map<string, number>()
+  views.forEach(v => {
+    const k = v._id.post_id.$oid
+    viewsByPostId.set(k, v.count + (viewsByPostId.get(k) || 0))
+  })
+  const topTenPosts = Array.from(viewsByPostId.entries()).sort((a, b) => b[1] - a[1]).slice(0, 10).map(v => v[0])
+  const posts = await Promise.all(topTenPosts.map(async post_id => {
+    const post = (await db.collection('posts').findOne({ _id: { $oid: post_id } })) as PostSchema
+    return { ...post, _id: post._id.$oid, author_id: post.author_id.$oid }
+  }))
+  c.json(posts)
 }
 
 export const getPost: HandlerFunc = async c => {
