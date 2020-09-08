@@ -1,0 +1,2 @@
+#!/bin/sh
+docker build --build-arg REACT_APP_API_ENDPOINT=http://dunja-home.ddns.net -t $IMAGE_NAME .
