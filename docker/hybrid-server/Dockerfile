@@ -27,7 +27,7 @@ COPY --from=client /app/build /apps/client
 WORKDIR /apps/server
 COPY server/src .
 COPY server/import_map.json .
-RUN deno cache --unstable index.ts
+RUN deno cache --unstable --importmap import_map.json index.ts
 # download mogno lib at image build, not at run
 RUN deno run --allow-net --allow-read --allow-write --allow-plugin --unstable https://deno.land/x/mongo@v0.8.0/mod.ts
 EXPOSE 8080
