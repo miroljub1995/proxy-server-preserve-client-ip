@@ -9,9 +9,12 @@ RUN snort -T -c /etc/snort/snort.conf
 # ##### ping this container from another #####
 # ############################################
 
-ADD nginx.conf /etc/nginx/
+ADD nginx.conf                   /etc/nginx/
+ADD dunja-home.ddns.net8184.cert /etc/ssl/certs/
+ADD dunja-home.ddns.net8184.key  /etc/ssl/certs/
 EXPOSE 8083
 EXPOSE 8084
+EXPOSE 8184
 
 ADD supervisord.conf /etc/supervisor/conf.d/
 CMD supervisord
