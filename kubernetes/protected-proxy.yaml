@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: protected-proxy
-        image: local/pspcip/protected-proxy
-        imagePullPolicy: Never # use locally built images
+        image: miroljub1995/pscpip_protected-proxy
+        imagePullPolicy: Always # use locally built images
         ports:
         - containerPort: 8084
           name: to-hs-proxy #pass to hybrid server with proxy protocol

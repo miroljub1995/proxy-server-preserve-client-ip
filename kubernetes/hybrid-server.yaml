@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: hybrid-server
-        image: local/pspcip/hybrid-server
-        imagePullPolicy: Never # use locally built images
+        image: miroljub1995/pscpip_hybrid-server
+        imagePullPolicy: Always # use locally built images
         ports:
         - containerPort: 8080
           name: http
