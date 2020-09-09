@@ -21,6 +21,8 @@ spec:
         ports:
         - containerPort: 8084
           name: to-hs-proxy #pass to hybrid server with proxy protocol
+        - containerPort: 8184
+          name: to-hs-proxy-ssl #pass ssl to hybrid server with proxy protocol
         - containerPort: 8083
           name: to-hs-http #pass to hybrid server without proxy protocol
         securityContext:
@@ -40,5 +42,7 @@ spec:
   ports:
     - port: 8084
       name: to-hs-proxy
+    - port: 8184
+      name: to-hs-proxy-ssl
     - port: 8083
       name: to-hs-http
