@@ -1,4 +1,5 @@
 import React, { createContext, Dispatch, FC, useCallback, useContext, useEffect, useReducer, useState } from 'react'
+import { ApiEndpoints } from '../api/endpoints'
 
 interface IUserStatus {
   isAuthenticated: boolean
@@ -64,7 +65,7 @@ const UserStatus: FC = ({ children }) => {
   const checkLogin = useCallback(async () => {
     try {
 
-      const res = await fetch(process.env.REACT_APP_API_ENDPOINT + '/check-login', {
+      const res = await fetch(ApiEndpoints.check_login, {
         credentials: 'include'
       })
       if (res.status === 200) {

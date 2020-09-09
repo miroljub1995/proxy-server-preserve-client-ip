@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { useInput } from '../components/CustomHooks'
 import { login, useUserStatus } from '../components/UserStatus'
 import { UserSchema } from '../api/types'
+import { ApiEndpoints } from '../api/endpoints'
 
 function Login() {
   const [email, setEmail] = useInput()
@@ -12,7 +13,7 @@ function Login() {
 
   const handleLogin = useCallback(() => {
     console.log('logging in', email, password)
-    fetch(process.env.REACT_APP_API_ENDPOINT + "/login", {
+    fetch(ApiEndpoints.login, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

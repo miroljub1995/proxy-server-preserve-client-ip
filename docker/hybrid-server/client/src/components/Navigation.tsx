@@ -1,19 +1,16 @@
 import React from 'react'
-import {
-  Container, Nav, Navbar,
-
-  NavDropdown
-} from 'react-bootstrap'
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
-import { logout, useUserStatus } from './UserStatus'
+import { ApiEndpoints } from '../api/endpoints'
 import Authenticated from './Authenticated'
+import { logout, useUserStatus } from './UserStatus'
 
 function Navigation() {
   const [userStatus, setUserStatus] = useUserStatus()
   const history = useHistory()
   async function onLogout() {
     console.log('Logout')
-    const res = await fetch(process.env.REACT_APP_API_ENDPOINT + '/logout', {
+    const res = await fetch(ApiEndpoints.logout, {
       method: 'POST',
       credentials: 'include'
     })

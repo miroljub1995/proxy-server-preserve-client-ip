@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { Button, Col, Form } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import { useInput } from '../components/CustomHooks'
+import { ApiEndpoints } from '../api/endpoints'
 
 function Register() {
   const [email, setEmail] = useInput()
@@ -10,7 +11,7 @@ function Register() {
 
   const handleRegister = useCallback(async () => {
     console.log('registering', email, password)
-    const res = await fetch(process.env.REACT_APP_API_ENDPOINT + "/register", {
+    const res = await fetch(ApiEndpoints.regiser, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
