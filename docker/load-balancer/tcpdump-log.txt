@@ -1,0 +1,25 @@
+6:33:33.529252 02:42:83:8c:da:7e > 02:42:ac:11:00:04, ethertype IPv4 (0x0800), length 74: 172.17.0.1.60432 > 172.17.0.4.8080: Flags [S], seq 3683760791, win 64240, options [mss1460,sackOK,TS val 3875026154 ecr 0,nop,wscale 7], length 0
+16:33:33.529311 02:42:ac:11:00:04 > 02:42:ac:11:00:03, ethertype IPv4 (0x0800), length 74: 172.17.0.1.60432 > 172.17.0.3.8080: Flags [S], seq 3683760791, win 64240, options [mss 1460,sackOK,TS val 3875026154 ecr 0,nop,wscale 7], length 0
+16:33:33.529348 02:42:ac:11:00:03 > 02:42:ac:11:00:04, ethertype IPv4 (0x0800), length 74: 172.17.0.3.8080 > 172.17.0.1.60432: Flags [S.], seq 2805086645, ack 3683760792, win 65160, options [mss 1460,sackOK,TS val 2234505442 ecr 3875026154,nop,wscale 7], length 0
+16:33:33.529372 02:42:ac:11:00:04 > 02:42:83:8c:da:7e, ethertype IPv4 (0x0800), length 74: 172.17.0.4.8080 > 172.17.0.1.60432: Flags [S.], seq 2805086645, ack 3683760792, win 65160, options [mss 1460,sackOK,TS val 2234505442 ecr 3875026154,nop,wscale 7], length 0
+16:33:33.529391 02:42:83:8c:da:7e > 02:42:ac:11:00:04, ethertype IPv4 (0x0800), length 66: 172.17.0.1.60432 > 172.17.0.4.8080: Flags [.], ack 1, win 502, options [nop,nop,TS val 3875026154 ecr 2234505442], length 0
+16:33:33.529402 02:42:ac:11:00:04 > 02:42:ac:11:00:03, ethertype IPv4 (0x0800), length 66: 172.17.0.1.60432 > 172.17.0.3.8080: Flags [.], ack 1, win 502, options [nop,nop,TS val 3875026154 ecr 2234505442], length 0
+16:33:33.529516 02:42:83:8c:da:7e > 02:42:ac:11:00:04, ethertype IPv4 (0x0800), length 145: 172.17.0.1.60432 > 172.17.0.4.8080: Flags [P.], seq 1:80, ack 1, win 502, options [nop,nop,TS val 3875026155 ecr 2234505442], length 79: HTTP: GET / HTTP/1.1
+16:33:33.529534 02:42:ac:11:00:04 > 02:42:ac:11:00:03, ethertype IPv4 (0x0800), length 145: 172.17.0.1.60432 > 172.17.0.3.8080: Flags [P.], seq 1:80, ack 1, win 502, options [nop,nop,TS val 3875026155 ecr 2234505442], length 79: HTTP: GET / HTTP/1.1
+16:33:33.529553 02:42:ac:11:00:03 > 02:42:ac:11:00:04, ethertype IPv4 (0x0800), length 66: 172.17.0.3.8080 > 172.17.0.1.60432: Flags [.], ack 80, win 509, options [nop,nop,TS val 2234505443 ecr 3875026155], length 0
+16:33:33.529560 02:42:ac:11:00:04 > 02:42:83:8c:da:7e, ethertype IPv4 (0x0800), length 66: 172.17.0.4.8080 > 172.17.0.1.60432: Flags [.], ack 80, win 509, options [nop,nop,TS val 2234505443 ecr 3875026155], length 0
+16:33:33.529634 02:42:ac:11:00:03 > 02:42:ac:11:00:04, ethertype IPv4 (0x0800), length 260: 172.17.0.3.8080 > 172.17.0.1.60432: Flags [P.], seq 1:195, ack 80, win 509, options [nop,nop,TS val 2234505443 ecr 3875026155], length 194: HTTP: HTTP/1.1 200 OK
+16:33:33.529651 02:42:ac:11:00:04 > 02:42:83:8c:da:7e, ethertype IPv4 (0x0800), length 260: 172.17.0.4.8080 > 172.17.0.1.60432: Flags [P.], seq 1:195, ack 80, win 509, options [nop,nop,TS val 2234505443 ecr 3875026155], length 194: HTTP: HTTP/1.1 200 OK
+16:33:33.529721 02:42:83:8c:da:7e > 02:42:ac:11:00:04, ethertype IPv4 (0x0800), length 66: 172.17.0.1.60432 > 172.17.0.4.8080: Flags [.], ack 195, win 501, options [nop,nop,TS val 3875026155 ecr 2234505443], length 0
+16:33:33.529738 02:42:ac:11:00:04 > 02:42:ac:11:00:03, ethertype IPv4 (0x0800), length 66: 172.17.0.1.60432 > 172.17.0.3.8080: Flags [.], ack 195, win 501, options [nop,nop,TS val 3875026155 ecr 2234505443], length 0
+16:33:33.529870 02:42:83:8c:da:7e > 02:42:ac:11:00:04, ethertype IPv4 (0x0800), length 66: 172.17.0.1.60432 > 172.17.0.4.8080: Flags [F.], seq 80, ack 195, win 501, options [nop,nop,TS val 3875026155 ecr 2234505443], length 0
+16:33:33.529891 02:42:ac:11:00:04 > 02:42:ac:11:00:03, ethertype IPv4 (0x0800), length 66: 172.17.0.1.60432 > 172.17.0.3.8080: Flags [F.], seq 80, ack 195, win 501, options [nop,nop,TS val 3875026155 ecr 2234505443], length 0
+16:33:33.529942 02:42:ac:11:00:03 > 02:42:ac:11:00:04, ethertype IPv4 (0x0800), length 66: 172.17.0.3.8080 > 172.17.0.1.60432: Flags [F.], seq 195, ack 81, win 509, options [nop,nop,TS val 2234505443 ecr 3875026155], length 0
+16:33:33.529951 02:42:ac:11:00:04 > 02:42:83:8c:da:7e, ethertype IPv4 (0x0800), length 66: 172.17.0.4.8080 > 172.17.0.1.60432: Flags [F.], seq 195, ack 81, win 509, options [nop,nop,TS val 2234505443 ecr 3875026155], length 0
+16:33:33.529963 02:42:83:8c:da:7e > 02:42:ac:11:00:04, ethertype IPv4 (0x0800), length 66: 172.17.0.1.60432 > 172.17.0.4.8080: Flags [.], ack 196, win 501, options [nop,nop,TS val 3875026155 ecr 2234505443], length 0
+16:33:33.529982 02:42:ac:11:00:04 > 02:42:ac:11:00:03, ethertype IPv4 (0x0800), length 66: 172.17.0.1.60432 > 172.17.0.3.8080: Flags [.], ack 196, win 501, options [nop,nop,TS val 3875026155 ecr 2234505443], length 0
+
+
+client = 7e
+lb     = 04
+server = 03
