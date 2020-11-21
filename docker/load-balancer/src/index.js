@@ -16,7 +16,7 @@ function getForwardCommand(toDestination, del) {
 let dstIPs = []
 
 function isIPsChanged(ips) {
-  return JSON.stringify(dstIPs) === JSON.stringify(ips)
+  return JSON.stringify(dstIPs) !== JSON.stringify(ips)
 }
 
 function execCommand(cmd) {
@@ -63,4 +63,6 @@ function updateTables() {
     })
 }
 
-updateTables()
+// updateTables()
+
+setInterval(updateTables, 3000)
