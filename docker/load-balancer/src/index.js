@@ -4,17 +4,23 @@ const kc = new k8s.KubeConfig()
 kc.loadFromDefault()
 
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api)
-const appsApi = kc.makeApiClient(k8s.AppsV1Api)
 
-k8sApi.listNamespacedPod('default').then((res) => {
-  console.log(res.body);
-  for(const pod in res.body.items) {
-    
-  }
-})
+// k8sApi.listNamespacedPod('default').then((res) => {
+//   const lbPod = res.body.items.find(p => p.metadata.labels['app'] === 'load-balancer')
+// })
 
-appsApi.listNamespacedDeployment('default').then(res => {
-  for(const depl in res.body.items) {
-    
-  }
-})
+// const appsApi = kc.makeApiClient(k8s.AppsV1Api)
+// appsApi.listNamespacedDeployment('default').then(res => {
+//   for (const depl in res.body.items) {
+
+//   }
+// })
+
+k8sApi
+  .listNamespacedService('default', null, null, null, null, "app=load-balancer")
+  .then(res => {
+    const lbService = res.body.items.length && res.body.items[0]
+    if (lbService) {
+      console.log(lbService.spec.externalIPs)
+    }
+  })
