@@ -1,26 +1,66 @@
 const k8s = require('@kubernetes/client-node')
-
+const { exec } = require('child_process')
 const kc = new k8s.KubeConfig()
 kc.loadFromDefault()
-
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api)
+const appName = "protected-proxy"
 
-// k8sApi.listNamespacedPod('default').then((res) => {
-//   const lbPod = res.body.items.find(p => p.metadata.labels['app'] === 'load-balancer')
-// })
+function getPreroutingCommand(every, toDestination, del) {
+  return `iptables -${del ? 'D' : 'A'} PREROUTING -t nat -p tcp --dport 8080 -m statistic --mode nth --every ${every} --packet 0 -j DNAT --to-destination ${toDestination}:8080`
+}
 
-// const appsApi = kc.makeApiClient(k8s.AppsV1Api)
-// appsApi.listNamespacedDeployment('default').then(res => {
-//   for (const depl in res.body.items) {
+function getForwardCommand(toDestination, del) {
+  return `iptables -t filter -${del ? 'D' : 'A'} FORWARD -p tcp -d ${toDestination} --dport 8080 -j ACCEPT`
+}
 
-//   }
-// })
+let dstIPs = []
 
-k8sApi
-  .listNamespacedService('default', null, null, null, null, "app=load-balancer")
-  .then(res => {
-    const lbService = res.body.items.length && res.body.items[0]
-    if (lbService) {
-      console.log(lbService.spec.externalIPs)
-    }
-  })
+function isIPsChanged(ips) {
+  return JSON.stringify(dstIPs) === JSON.stringify(ips)
+}
+
+function execCommand(cmd) {
+  exec(cmd, err => err && console.log(err))
+}
+
+function removeOldCommand(every, toDestination) {
+  execCommand(getForwardCommand(toDestination, true))
+  execCommand(getPreroutingCommand(every, toDestination, true))
+}
+
+function addNewCommand(every, toDestination) {
+  execCommand(getPreroutingCommand(every, toDestination, false))
+  execCommand(getForwardCommand(toDestination, false))
+}
+
+function removeOldCommands(ips) {
+  for (let i = 0; i < ips.length; i++) {
+    removeOldCommand(i + 1, ips[i])
+  }
+}
+
+function addNewCommands(ips) {
+  for (let i = ips.length - 1; i >= 0; i--) {
+    addNewCommand(i + 1, ips[i])
+  }
+}
+
+function newIPsReceived(ips) {
+  if (isIPsChanged(ips)) {
+    removeOldCommands(dstIPs)
+    addNewCommands(ips)
+    dstIPs = ips
+  }
+}
+
+function updateTables() {
+  k8sApi
+    .listNamespacedPod('default', null, null, null, null, `app=${appName}`)
+    .then(res => {
+      const pods = res.body.items
+      const podIPs = pods.map(p => p.status.podIP).sort()
+      newIPsReceived(podIPs)
+    })
+}
+
+updateTables()
