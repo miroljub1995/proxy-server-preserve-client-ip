@@ -4,13 +4,14 @@ const kc = new k8s.KubeConfig()
 kc.loadFromDefault()
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api)
 const appName = "protected-proxy"
+const appPort = "8084"
 
 function getPreroutingCommand(every, toDestination, del) {
-  return `iptables -${del ? 'D' : 'A'} PREROUTING -t nat -p tcp --dport 8080 -m statistic --mode nth --every ${every} --packet 0 -j DNAT --to-destination ${toDestination}:8080`
+  return `iptables -${del ? 'D' : 'A'} PREROUTING -t nat -p tcp --dport 8080 -m statistic --mode nth --every ${every} --packet 0 -j DNAT --to-destination ${toDestination}:${appPort}`
 }
 
 function getForwardCommand(toDestination, del) {
-  return `iptables -t filter -${del ? 'D' : 'A'} FORWARD -p tcp -d ${toDestination} --dport 8080 -j ACCEPT`
+  return `iptables -t filter -${del ? 'D' : 'A'} FORWARD -p tcp -d ${toDestination} --dport ${appPort} -j ACCEPT`
 }
 
 let dstIPs = []
