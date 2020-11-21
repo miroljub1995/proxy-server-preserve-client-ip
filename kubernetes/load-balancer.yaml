@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-balancer-deployment
+  labels:
+    app: load-balancer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: load-balancer
+  template:
+    metadata:
+      labels:
+        app: load-balancer
+    spec:
+      containers:
+      - name: load-balancer
+        image: miroljub1995/pscpip_load-balancer
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: load-balancer
+spec:
+  selector:
+    app: load-balancer
+  ports:
+    - port: 8080
+      name: http
