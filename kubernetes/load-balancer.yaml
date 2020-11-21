@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: load-balancer
-        image: miroljub1995/pscpip_load-balancer
+        image: miroljub1995/pspcip_load-balancer
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
