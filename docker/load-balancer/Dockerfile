@@ -17,4 +17,5 @@ COPY package-lock.json /app/
 COPY src /app/src
 RUN npm i
 # ENTRYPOINT [ "/bin/bash" ]
-CMD [ "/app/setup-iptables.sh" ]
+# CMD [ "/app/setup-iptables.sh" ]
+CMD ["npm", "start"]
