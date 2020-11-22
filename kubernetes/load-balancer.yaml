@@ -25,9 +25,7 @@ spec:
           capabilities:
             add:
             - NET_ADMIN
-          sysctls:
-          - name: net.ipv4.ip_forward
-            value: 1
+          privilaged: true
 ---
 apiVersion: v1
 kind: Service

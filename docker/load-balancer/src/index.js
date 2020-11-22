@@ -64,6 +64,6 @@ function updateTables() {
     })
 }
 
+execCommand("echo 1 > /proc/sys/net/ipv4/ip_forward")
 // updateTables()
-
 setInterval(updateTables, 3000)
