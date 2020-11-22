@@ -25,7 +25,7 @@ spec:
           capabilities:
             add:
             - NET_ADMIN
-          privilaged: true
+          privileged: true
 ---
 apiVersion: v1
 kind: Service
