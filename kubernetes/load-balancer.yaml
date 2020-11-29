@@ -32,6 +32,8 @@ kind: Service
 metadata:
   name: load-balancer
 spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
     app: load-balancer
   ports:

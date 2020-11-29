@@ -65,5 +65,6 @@ function updateTables() {
 }
 
 execCommand("echo 1 > /proc/sys/net/ipv4/ip_forward")
+execCommand("iptables -t nat -A POSTROUTING -j MASQUERADE")
 // updateTables()
 setInterval(updateTables, 3000)
