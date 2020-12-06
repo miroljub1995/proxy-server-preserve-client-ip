@@ -107,6 +107,7 @@ def add_bots():
         'http://www.google.com/search?hl=en&num=100&q=intext%3A%40&ie=utf-8')
     return bots
 
+
 class Synflood(Thread):
     def _init_(self, t_ip, t_port, s_ip, s_port):
         Thread._init_(self)
@@ -196,6 +197,7 @@ class Synflood(Thread):
             except Exception as e:
                 cprint(e, 'red')
 
+
 def main():
     parser = ArgumentParser(
         usage='./%(prog)s -t [target] -p [port]',
@@ -239,5 +241,5 @@ def main():
         sys.exit(cprint('[-] Canceled by user', 'red'))
     input()
 
-if _name_ == '_main_':
-    main()
+
+main()
