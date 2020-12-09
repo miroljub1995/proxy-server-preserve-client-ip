@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: protected-proxy-deployment
+  labels:
+    app: protected-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: protected-proxy
+  template:
+    metadata:
+      labels:
+        app: protected-proxy
+    spec:
+      containers:
+      - name: protected-proxy
+        image: miroljub1995/pspcip_test-proxy
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8084
+          name: web
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: protected-proxy-lb
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  selector:
+    app: protected-proxy
+  ports:
+    - port: 8084
+      name: web
