@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt update && apt install -y iptables iproute2 snort nginx supervisor && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y iptables iproute2 snort nginx supervisor tcpdump curl && rm -rf /var/lib/apt/lists/*
 RUN snort -T -c /etc/snort/snort.conf
 
 # ############## Add SYN flood rule #########

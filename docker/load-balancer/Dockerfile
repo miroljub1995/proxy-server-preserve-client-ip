@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt install -y iptables vim curl
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt update && apt install -y nodejs && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y nodejs tcpdump curl && rm -rf /var/lib/apt/lists/*
 
 ADD ./setup-iptables.sh /app/
 RUN chmod +x /app/setup-iptables.sh
