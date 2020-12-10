@@ -62,6 +62,7 @@ function updateTables() {
       const podIPs = pods.map(p => p.status.podIP).sort()
       newIPsReceived(podIPs)
     })
+    .catch(console.error)
 }
 
 execCommand("echo 1 > /proc/sys/net/ipv4/ip_forward")
