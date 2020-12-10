@@ -25,3 +25,16 @@ spec:
           capabilities:
             add:
             - NET_ADMIN
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: protected-proxy-lb
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  selector:
+    app: protected-proxy
+  ports:
+    - port: 8084
+      name: web
