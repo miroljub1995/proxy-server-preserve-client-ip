@@ -59,7 +59,7 @@ function updateTables() {
     .listNamespacedPod('default', null, null, null, null, `app=${appName}`)
     .then(res => {
       const pods = res.body.items
-      const podIPs = pods.map(p => p.status.podIP).sort()
+      const podIPs = pods.filter(p => p.status.phase === 'Running').map(p => p.status.podIP).sort()
       newIPsReceived(podIPs)
     })
     .catch(console.error)
