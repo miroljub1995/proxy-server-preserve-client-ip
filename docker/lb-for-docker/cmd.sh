@@ -12,7 +12,10 @@ rebuild)
 # stop)
 #     docker ps -a | awk '{ print $1,$2 }' | grep $IMAGE_NAME | awk '{print $1 }' | xargs -I {} docker stop {}
 #     ;;
-start1)
+start)
     docker run -p 8080:8080 -itd --name=lb-for-docker --cap-add=NET_ADMIN $IMAGE_NAME
+    ;;
+start-cloud)
+    docker run -p 8080:8080 -itd --name=lb-for-docker --cap-add=NET_ADMIN miroljub1995/pspcip_lb-for-docker
     ;;
 esac
