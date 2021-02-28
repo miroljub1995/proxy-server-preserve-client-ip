@@ -18,4 +18,10 @@ start1)
 start2)
     docker run -d -it --name=snort1-for-docker --cap-add=NET_ADMIN $IMAGE_NAME
     ;;
+start1-cloud)
+    docker run -d -it --name=snort1-for-docker --cap-add=NET_ADMIN miroljub1995/pspcip_snort-for-docker:latest
+    ;;
+start2-cloud)
+    docker run -d -it --name=snort2-for-docker --cap-add=NET_ADMIN miroljub1995/pspcip_snort-for-docker:latest
+    ;;
 esac
