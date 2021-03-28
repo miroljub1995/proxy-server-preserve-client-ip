@@ -18,5 +18,5 @@ export const ApiEndpoints = {
   check_login: `${API_ENDPOINT}/check-login`,
   login: `${API_ENDPOINT}/login`,
   logout: `${API_ENDPOINT}/logout`,
-  regiser: `${API_ENDPOINT}/regiser`,
+  regiser: `${API_ENDPOINT}/register`,
 }
