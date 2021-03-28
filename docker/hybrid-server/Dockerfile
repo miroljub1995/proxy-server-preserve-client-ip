@@ -11,10 +11,19 @@ WORKDIR /app
 ENV REACT_APP_API_ENDPOINT=${REACT_APP_API_ENDPOINT}
 RUN npm i && npm run build
 
-###### creating server
-FROM hayd/alpine-deno:1.1.1
+###### building server
+FROM hayd/alpine-deno:1.8.2 as server
+WORKDIR /app
+COPY server/src ./src/
+COPY server/import_map.json ./
+COPY server/build.sh ./
+RUN chmod +x build.sh
+RUN ./build.sh
 
-# setup mmproxy
+################################# final image
+FROM alpine:3.13.3
+
+# copy mmproxy
 RUN apk add iproute2 supervisor
 WORKDIR /apps/mmproxy
 COPY --from=mm-builder /go/bin/go-mmproxy ./
@@ -22,20 +31,14 @@ COPY allowed-networks.txt ./
 COPY mmproxy.sh ./
 EXPOSE 8082
 
-# setup server
-COPY --from=client /app/build /apps/client
-WORKDIR /apps/server
-COPY server/src .
-COPY server/import_map.json .
-RUN deno cache --unstable --importmap import_map.json index.ts
-# download mogno lib at image build, not at run
-RUN deno run --allow-net --allow-read --allow-write --allow-plugin --unstable https://deno.land/x/mongo@v0.8.0/mod.ts
-EXPOSE 8080
+# copy client
+COPY --from=client /app/build /apps/client/
+
+#copy server
+COPY --from=server /app/app /apps/server/
+RUN chmod +x /apps/server/app
 ENV DB_URI='mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017,mongo-db-3.mongo-db:27017,mongo-db-4.mongo-db:27017/?replicaSet=repl-set0'
+
 ADD supervisord.conf /etc/supervisor/conf.d/
-# CMD [ "run", "--allow-net", "--allow-read", "--allow-write", "--unstable", "--allow-plugin", "--allow-env", "index.ts" ]
 ENTRYPOINT [ "supervisord" ]
 CMD [ "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
-# WORKDIR /apps/mmproxy
-# ENTRYPOINT [ "./go-mmproxy" ]
-# CMD [ "-l", "0.0.0.0:8082", "-4", "127.0.0.1:8080", "-v", "2" ]
