@@ -1,4 +1,4 @@
-import { Application } from "abc/app.ts";
+import type { Application } from "abc/app.ts";
 import { getByPostId, addComment } from '../comments.ts';
 import { authenticationMiddleware } from "../../middlewares.ts";
 

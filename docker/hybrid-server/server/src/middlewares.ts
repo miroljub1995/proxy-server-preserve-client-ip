@@ -1,19 +1,22 @@
 import { Context } from "abc/context.ts";
 import { NotFoundException, UnauthorizedException } from "abc/mod.ts";
-import { HandlerFunc, MiddlewareFunc } from "abc/types.ts";
+import type { HandlerFunc, MiddlewareFunc } from "abc/types.ts";
 import { validateJwt } from "./utils.ts";
 
 export const authenticationMiddleware: MiddlewareFunc = next => {
   return async c => {
     const jwtToken = c.cookies['jwt_token']
     console.log("Checking auth, token:", jwtToken)
-    const jwt = await validateJwt(jwtToken)
-    if (jwt && jwt.payload && jwt.payload.iss) {
+    try {
+      const payload = await validateJwt(jwtToken)
+      if (!payload.iss) {
+        throw new Error("Issuer not defined in token");
+      }
       console.log("Jwt valid")
-      const cContext = new AuthContext(c, jwt.payload.iss)
+      const cContext = new AuthContext(c, payload.iss)
       return next(cContext)
     }
-    else {
+    catch (e) {
       console.log("Jwt not valid")
       c.setCookie({ httpOnly: true, name: 'jwt_token', value: "", expires: new Date(), sameSite: 'None', secure: false })
       throw new UnauthorizedException()

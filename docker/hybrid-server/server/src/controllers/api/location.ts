@@ -1,7 +1,9 @@
-import { Application, InternalServerErrorException } from "abc/mod.ts";
+import { InternalServerErrorException } from "abc/mod.ts";
+import type { Application } from "abc/mod.ts";
 import { Status } from "std/http/mod.ts";
 import { getSavedLocations, saveCurrentLocation } from "../../controllers.ts";
-import { AuthContext, authenticationMiddleware } from "../../middlewares.ts";
+import { authenticationMiddleware } from "../../middlewares.ts";
+import type { AuthContext } from "../../middlewares.ts";
 import { getCurrentLocation } from "../../utils.ts";
 
 export default function addLocationApi(app: Application) {
@@ -19,7 +21,7 @@ export default function addLocationApi(app: Application) {
       throw new InternalServerErrorException()
     }, authenticationMiddleware)
     .post('/api/save-current-location', async c => {
-      const { description } = await c.body() as { description: string }
+      const { description } = await c.body as { description: string }
       const email = (c.customContext as AuthContext).email
       const clientAddress = c.request.conn.remoteAddr
       if (clientAddress.transport !== 'tcp')

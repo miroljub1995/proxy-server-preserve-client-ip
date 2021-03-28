@@ -1,6 +1,8 @@
 import { Header, HttpMethod } from "abc/constants.ts";
-import { cors, CORSConfig } from "abc/middleware/cors.ts";
-import { Application } from "abc/mod.ts";
+import { cors } from "abc/middleware/cors.ts";
+import type { CORSConfig } from "abc/middleware/cors.ts";
+
+import type { Application } from "abc/mod.ts";
 
 const config: CORSConfig = {
   allowOrigins: ["*"],
@@ -9,7 +11,7 @@ const config: CORSConfig = {
   allowCredentials: true
 }
 
-export default (app: Application) => { 
+export default (app: Application) => {
   app.use(cors(config))
 }
 // export default (app: Application) => { app.use(cors(config)) }

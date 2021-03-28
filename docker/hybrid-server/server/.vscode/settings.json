@@ -1,6 +1,6 @@
 {
   "editor.renderWhitespace": "all",
   "deno.enable": true,
-  "deno.import_map": "./import_map.json",
+  "deno.importMap": "./import_map.json",
   "debug.javascript.usePreview": false
 }

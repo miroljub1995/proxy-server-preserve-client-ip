@@ -1,4 +1,4 @@
-import { Application } from "abc/app.ts";
+import type { Application } from "abc/app.ts";
 import { getWhatsHotPosts, getWhatsNewPosts, getPost, addPost, editPost, deletePost, getPostsByMe } from '../posts.ts';
 import { authenticationMiddleware } from "../../middlewares.ts";
 

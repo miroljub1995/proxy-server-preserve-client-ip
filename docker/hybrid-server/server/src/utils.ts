@@ -1,25 +1,26 @@
-import { Status } from "std/http/mod.ts";
-import { Jose, makeJwt, Payload, setExpiration } from 'djwt/create.ts';
-import { validateJwt as validateJwtCore } from 'djwt/validate.ts';
+import { Status } from "std/http/mod.ts"
+import { create, getNumericDate, Header, verify } from 'djwt/mod.ts'
+import type { Payload } from 'djwt/mod.ts'
 
 // TODO: load key from env
 const key = "this-is-my-secret"
-const header: Jose = {
+const header: Header = {
   alg: "HS256",
   typ: "JWT",
 }
 
-export function generateJwt(email: string) {
-  const exp = setExpiration(new Date().getTime() + 3600e3)
+export async function generateJwt(email: string) {
+  const exp = getNumericDate(3600)
   const payload: Payload = {
     iss: email,
     exp
   }
-  return [makeJwt({ header, payload, key }), exp] as const
+  return [await create(header, payload, key), exp] as const
 }
 
 export async function validateJwt(jwt: string) {
-  return validateJwtCore(jwt, key, { isThrowing: false })
+  const payload = await verify(jwt, key, header.alg)
+  return payload
 }
 
 export async function getCurrentLocation(addr: Deno.NetAddr) {

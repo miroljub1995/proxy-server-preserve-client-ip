@@ -1,4 +1,4 @@
-import { Application } from "abc/app.ts";
+import type { Application } from "abc/app.ts";
 import addUsersApi from './api/users.ts'
 import addLocationApi from "./api/location.ts";
 import addTest from './api/test.ts'
