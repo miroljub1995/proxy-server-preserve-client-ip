@@ -35,6 +35,7 @@ EXPOSE 8082
 COPY --from=client /app/build /apps/client/
 
 # copy server
+RUN apk add --no-cache libstdc++
 COPY --from=server /app/app /apps/server/
 RUN chmod +x /apps/server/app
 ENV DB_URI='mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017,mongo-db-3.mongo-db:27017,mongo-db-4.mongo-db:27017/?replicaSet=repl-set0'
