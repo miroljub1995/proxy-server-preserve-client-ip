@@ -2,12 +2,12 @@ import usersCollection from "./db/usersCollection.ts"
 import { generateJwt } from './utils.ts'
 
 export async function registerUser(email: string, password: string) {
-  const users = usersCollection()
+  const users = await usersCollection()
   return await users.insertOne({ email, password })
 }
 
 export async function loginUser(email: string, password: string) {
-  const users = usersCollection()
+  const users = await usersCollection()
   const res = await users.findOne({ email, password })
   if (res) {
     return await generateJwt(email)
@@ -16,7 +16,7 @@ export async function loginUser(email: string, password: string) {
 }
 
 export async function saveCurrentLocation(email: string, location: string, description: string) {
-  const users = usersCollection()
+  const users = await usersCollection()
   return await users.updateOne({
     email
   }, {
@@ -27,7 +27,7 @@ export async function saveCurrentLocation(email: string, location: string, descr
 }
 
 export async function getSavedLocations(email: string) {
-  const users = usersCollection()
+  const users = await usersCollection()
   const { locations } = await users.findOne({ email }) || { locations: [] }
   return locations
 }

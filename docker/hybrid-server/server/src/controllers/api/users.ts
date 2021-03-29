@@ -19,14 +19,15 @@ export default function addUsersApi(app: Application) {
       const loginStatus = await loginUser(email, password)
       if (loginStatus) {
         const [jwtToken, exp] = loginStatus
-        c.setCookie({ httpOnly: true, name: 'jwt_token', value: jwtToken, expires: new Date(exp), sameSite: 'None', secure: false })
-        const res = await usersCollection().findOne({ email })
+        c.setCookie({ httpOnly: true, name: 'jwt_token', value: jwtToken, expires: new Date(exp * 1e3), sameSite: 'None', secure: false })
+        const usersColl = await usersCollection()
+        const res = await usersColl.findOne({ email })
         if (res) {
           const { _id } = res
-          c.json({ email, _id: _id.$oid })
+          c.json({ email, _id: _id.toHexString() })
         }
         else {
-          c.response.status = 403
+          throw new UnauthorizedException()
         }
       }
       else {
@@ -39,10 +40,11 @@ export default function addUsersApi(app: Application) {
     })
     .get('/api/check-login', async c => {
       const email = (c.customContext as AuthContext).email
-      const res = await usersCollection().findOne({ email })
+      const usersColl = await usersCollection()
+      const res = await usersColl.findOne({ email })
       if (res) {
         const { _id } = res
-        c.json({ email, _id: _id.$oid })
+        c.json({ email, _id: _id.toHexString() })
 
       } else {
         c.response.status = 403

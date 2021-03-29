@@ -1,13 +1,10 @@
 import type { HandlerFunc } from "abc/types.ts"
 import viewsCollection from "../db/viewsCollection.ts"
-
-export interface ViewSchema {
-  _id: { post_id: { $oid: string }, country: string }
-  count: number
-}
+import { Bson } from 'mongo/mod.ts'
 
 export const getViewsByPostId: HandlerFunc = async c => {
-  const post_id = c.params.id
-  const views = await viewsCollection().find({ "_id.post_id": { $oid: post_id } }).toArray()
+  const post_id = new Bson.ObjectID(c.params.id)
+  const viewsColl = await viewsCollection()
+  const views = await viewsColl.find({ "_id.post_id": post_id }).toArray()
   c.json(views.map(v => ({ _id: v._id.country, value: v.count })))
 }
