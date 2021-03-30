@@ -18,7 +18,7 @@ export const authenticationMiddleware: MiddlewareFunc = next => {
     }
     catch (e) {
       console.log("Jwt not valid", e)
-      c.setCookie({ httpOnly: true, name: 'jwt_token', value: "", expires: new Date(), sameSite: 'None', secure: false })
+      c.setCookie({ httpOnly: true, name: 'jwt_token', value: "", expires: new Date(), secure: false })
       throw new UnauthorizedException()
     }
   }

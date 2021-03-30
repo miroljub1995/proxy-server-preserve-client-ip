@@ -56,8 +56,10 @@ export const getPost: HandlerFunc = async c => {
         c.string("Post not found", 404)
       }
     }
+    else {
+      c.response.status = 400
+    }
   }
-  c.response.status = 400
 }
 
 export const getPostsByMe: HandlerFunc = async c => {

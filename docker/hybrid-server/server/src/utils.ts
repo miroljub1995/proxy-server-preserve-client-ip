@@ -23,7 +23,12 @@ export async function validateJwt(jwt: string) {
   return payload
 }
 
+const cache = new Map<string, { country: string, city: string }>()
 export async function getCurrentLocation(addr: Deno.NetAddr) {
+  const inCache = cache.get(addr.hostname)
+  if (inCache) {
+    return inCache
+  }
   function isPrivateIP(ip: string) {
     return /(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/.test(ip)
   }
@@ -36,6 +41,7 @@ export async function getCurrentLocation(addr: Deno.NetAddr) {
   const res = await fetch(createURL(addr.hostname))
   if (res.status === Status.OK) {
     const { country, city } = await res.json() as { country: string, city: string }
+    cache.set(addr.hostname, { country, city })
     return { country, city }
   }
   return null
