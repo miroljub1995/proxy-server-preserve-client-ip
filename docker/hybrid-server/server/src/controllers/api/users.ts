@@ -19,7 +19,7 @@ export default function addUsersApi(app: Application) {
       const loginStatus = await loginUser(email, password)
       if (loginStatus) {
         const [jwtToken, exp] = loginStatus
-        console.log("Setting cookie")
+        console.log("Setting cookie", jwtToken, new Date(exp * 1e3))
         c.setCookie({ httpOnly: true, name: 'jwt_token', value: jwtToken, expires: new Date(exp * 1e3), sameSite: 'None', secure: false })
         const usersColl = await usersCollection()
         const res = await usersColl.findOne({ email })
@@ -36,6 +36,7 @@ export default function addUsersApi(app: Application) {
       }
     })
     .post('/api/logout', c => {
+      console.log("Logging out.")
       c.setCookie({ httpOnly: true, name: 'jwt_token', value: "", expires: new Date() })
       c.response.status = Status.OK
     })
