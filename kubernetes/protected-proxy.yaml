@@ -5,7 +5,7 @@ metadata:
   labels:
     app: protected-proxy
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: protected-proxy
