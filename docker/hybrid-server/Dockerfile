@@ -38,7 +38,7 @@ COPY --from=client /app/build /apps/client/
 # RUN apk add --no-cache libstdc++ libc6-compat
 COPY --from=server /app/app /apps/server/
 RUN chmod +x /apps/server/app
-ENV DB_URI='mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017,mongo-db-3.mongo-db:27017,mongo-db-4.mongo-db:27017/?replicaSet=repl-set0'
+# ENV DB_URI='mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017,mongo-db-3.mongo-db:27017,mongo-db-4.mongo-db:27017/?replicaSet=repl-set0'
 
 ADD supervisord.conf /etc/supervisor/conf.d/
 ENTRYPOINT [ "supervisord" ]

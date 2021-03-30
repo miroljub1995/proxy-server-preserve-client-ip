@@ -27,6 +27,9 @@ spec:
           capabilities:
             add:
             - NET_ADMIN
+        env:
+        - name: DB_URI
+          value: "mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017/?replicaSet=repl-set0"
 ---
 apiVersion: v1
 kind: Service
