@@ -8,7 +8,9 @@ export const useCommentsByPost = (id: Comment['post_id'] | undefined) => {
   const [needFetch, setNeedFetch] = useState(true)
   const fetchComment = useCallback(async () => {
     if (id) {
-      const res = await fetch(ApiEndpoints.comments_by_post_id(id))
+      const res = await fetch(ApiEndpoints.comments_by_post_id(id), {
+        credentials: 'include'
+      })
       const responseJson = await res.json()
       const data = t.array(CommentSchema).cast(responseJson).sort((a, b) => b.date_created - a.date_created)
       setComments(data)

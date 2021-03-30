@@ -6,7 +6,9 @@ import { Post, PostSchema } from './types'
 export const useWhatsNew = () => {
   const [posts, setPosts] = useState<Post[]>([])
   const fetchNewPosts = useCallback(async () => {
-    const res = await fetch(ApiEndpoints.posts_whatsNew)
+    const res = await fetch(ApiEndpoints.posts_whatsNew, {
+      credentials: 'include'
+    })
     const responseJson = await res.json()
     const data = t.array(PostSchema).cast(responseJson)
     setPosts(data)
@@ -20,7 +22,9 @@ export const useWhatsNew = () => {
 export const useWhatsHot = () => {
   const [posts, setPosts] = useState<Post[]>([])
   const fetchNewPosts = useCallback(async () => {
-    const res = await fetch(ApiEndpoints.posts_whatsHot)
+    const res = await fetch(ApiEndpoints.posts_whatsHot, {
+      credentials: 'include'
+    })
     const responseJson = await res.json()
     const data = t.array(PostSchema).cast(responseJson)
     setPosts(data)
@@ -34,7 +38,9 @@ export const useWhatsHot = () => {
 export const usePost = (id: Post["_id"]) => {
   const [post, setPost] = useState<Post | null>(null)
   const fetchPost = useCallback(async () => {
-    const res = await fetch(ApiEndpoints.posts_by_id(id))
+    const res = await fetch(ApiEndpoints.posts_by_id(id), {
+      credentials: 'include'
+    })
     const responseJson = await res.json()
     const data = PostSchema.cast(responseJson)
     setPost(data)

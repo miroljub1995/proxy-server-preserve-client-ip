@@ -19,6 +19,7 @@ export default function addUsersApi(app: Application) {
       const loginStatus = await loginUser(email, password)
       if (loginStatus) {
         const [jwtToken, exp] = loginStatus
+        console.log("Setting cookie")
         c.setCookie({ httpOnly: true, name: 'jwt_token', value: jwtToken, expires: new Date(exp * 1e3), sameSite: 'None', secure: false })
         const usersColl = await usersCollection()
         const res = await usersColl.findOne({ email })
