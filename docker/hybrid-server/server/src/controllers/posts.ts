@@ -77,6 +77,7 @@ export const getPostsByMe: HandlerFunc = async c => {
 
 export const addPost: HandlerFunc = async c => {
   const post = JSON.parse(await c.body as string)
+  console.log("Adding post", post);
   const email = (c as any as AuthContext).email
   const usersColl = await usersCollection()
   const res = await usersColl.findOne({ email });
