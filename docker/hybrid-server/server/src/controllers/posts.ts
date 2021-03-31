@@ -6,6 +6,7 @@ import usersCollection from "../db/usersCollection.ts"
 import viewsCollection from "../db/viewsCollection.ts"
 import postsCollection from "../db/postsCollection.ts"
 import { Bson } from 'mongo/mod.ts'
+import { Mutex } from "../Mutex.ts";
 
 export const getWhatsNewPosts: HandlerFunc = async c => {
   const postsColl = await postsCollection()
@@ -35,6 +36,7 @@ export const getWhatsHotPosts: HandlerFunc = async c => {
   c.json(posts.filter(p => p))
 }
 
+const viewsMutex = new Mutex()
 export const getPost: HandlerFunc = async c => {
   try {
     if (c.request.conn.remoteAddr.transport === 'tcp') {
@@ -45,14 +47,16 @@ export const getPost: HandlerFunc = async c => {
         if (post) {
           const viewId = { post_id: post._id, country: res.country }
           const viewsColl = await viewsCollection()
-          const view = await viewsColl.findOne({ _id: viewId })
-          if (view) {
-            await viewsColl.updateOne({ _id: viewId }, { $inc: { count: 1 } }, { writeConcern: { w: 'majority' } })
-          }
-          else {
-            await viewsColl.insertOne({ _id: viewId, count: 1 }, { writeConcern: { w: 'majority' } })
-          }
-          c.json({ ...post, _id: post._id.toHexString(), author_id: post.author_id.toHexString() })
+          await viewsMutex.dispatch<void>(async () => {
+            const view = await viewsColl.findOne({ _id: viewId })
+            if (view) {
+              await viewsColl.updateOne({ _id: viewId }, { $inc: { count: 1 } }, { writeConcern: { w: 'majority' } })
+            }
+            else {
+              await viewsColl.insertOne({ _id: viewId, count: 1 }, { writeConcern: { w: 'majority' } })
+            }
+            c.json({ ...post, _id: post._id.toHexString(), author_id: post.author_id.toHexString() })
+          })
         }
         else {
           c.string("Post not found", 404)
