@@ -57,7 +57,7 @@ export const getPost: HandlerFunc = async c => {
       }
     }
     else {
-      c.response.status = 400
+      c.string("Location not found", 404)
     }
   }
 }

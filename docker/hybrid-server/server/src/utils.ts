@@ -23,26 +23,31 @@ export async function validateJwt(jwt: string) {
   return payload
 }
 
-const cache = new Map<string, { country: string, city: string }>()
-export async function getCurrentLocation(addr: Deno.NetAddr) {
-  const inCache = cache.get(addr.hostname)
-  if (inCache) {
-    return inCache
+const cache = new Map<string, Promise<{ country: string, city: string } | null>>()
+export async function getCurrentLocation(addr: Deno.NetAddr): Promise<{ country: string, city: string } | null> {
+  if (!cache.has(addr.hostname)) {
+    cache.set(addr.hostname, fetchNewLocation(addr.hostname))
   }
-  function isPrivateIP(ip: string) {
-    return /(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/.test(ip)
-  }
-  function createURL(ip: string) {
-    const fieldsParam = 'fields=status,message,country,city'
-    if (isPrivateIP(ip))
-      return `http://ip-api.com/json?${fieldsParam}`
-    return `http://ip-api.com/json/${ip}?${fieldsParam}`
-  }
-  const res = await fetch(createURL(addr.hostname))
+  return (await cache.get(addr.hostname)) ?? null
+}
+
+async function fetchNewLocation(hostname: string) {
+  console.log("Fetching new location")
+  const res = await fetch(createURL(hostname))
   if (res.status === Status.OK) {
     const { country, city } = await res.json() as { country: string, city: string }
-    cache.set(addr.hostname, { country, city })
     return { country, city }
   }
   return null
+}
+
+function isPrivateIP(ip: string) {
+  return /(^127\.)|(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)/.test(ip)
+}
+
+function createURL(ip: string) {
+  const fieldsParam = 'fields=status,message,country,city'
+  if (isPrivateIP(ip))
+    return `http://ip-api.com/json?${fieldsParam}`
+  return `http://ip-api.com/json/${ip}?${fieldsParam}`
 }
