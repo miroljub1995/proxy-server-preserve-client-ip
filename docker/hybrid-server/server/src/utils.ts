@@ -33,10 +33,15 @@ export async function getCurrentLocation(addr: Deno.NetAddr): Promise<{ country:
 
 async function fetchNewLocation(hostname: string) {
   console.log("Fetching new location")
-  const res = await fetch(createURL(hostname))
-  if (res.status === Status.OK) {
-    const { country, city } = await res.json() as { country: string, city: string }
-    return { country, city }
+  try {
+    const res = await fetch(createURL(hostname))
+    if (res.status === Status.OK) {
+      const { country, city } = await res.json() as { country: string, city: string }
+      return { country, city }
+    }
+  }
+  catch (e) {
+    console.error("Failed to fetch new location", e)
   }
   return null
 }

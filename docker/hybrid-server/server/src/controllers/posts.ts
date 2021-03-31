@@ -1,3 +1,4 @@
+import { InternalServerErrorException } from "abc/mod.ts";
 import type { HandlerFunc } from "abc/types.ts"
 import type { AuthContext } from "../middlewares.ts"
 import { getCurrentLocation } from "../utils.ts"
@@ -35,30 +36,35 @@ export const getWhatsHotPosts: HandlerFunc = async c => {
 }
 
 export const getPost: HandlerFunc = async c => {
-  if (c.request.conn.remoteAddr.transport === 'tcp') {
-    const res = await getCurrentLocation(c.request.conn.remoteAddr)
-    if (res) {
-      const postsColl = await postsCollection()
-      const post = await postsColl.findOne({ _id: new Bson.ObjectID(c.params.id) })
-      if (post) {
-        const viewId = { post_id: post._id, country: res.country }
-        const viewsColl = await viewsCollection()
-        const view = await viewsColl.findOne({ _id: viewId })
-        if (view) {
-          await viewsColl.updateOne({ _id: viewId }, { $inc: { count: 1 } })
+  try {
+    if (c.request.conn.remoteAddr.transport === 'tcp') {
+      const res = await getCurrentLocation(c.request.conn.remoteAddr)
+      if (res) {
+        const postsColl = await postsCollection()
+        const post = await postsColl.findOne({ _id: new Bson.ObjectID(c.params.id) })
+        if (post) {
+          const viewId = { post_id: post._id, country: res.country }
+          const viewsColl = await viewsCollection()
+          const view = await viewsColl.findOne({ _id: viewId })
+          if (view) {
+            await viewsColl.updateOne({ _id: viewId }, { $inc: { count: 1 } }, { writeConcern: { w: 'majority' } })
+          }
+          else {
+            await viewsColl.insertOne({ _id: viewId, count: 1 }, { writeConcern: { w: 'majority' } })
+          }
+          c.json({ ...post, _id: post._id.toHexString(), author_id: post.author_id.toHexString() })
         }
         else {
-          await viewsColl.insertOne({ _id: viewId, count: 1 })
+          c.string("Post not found", 404)
         }
-        c.json({ ...post, _id: post._id.toHexString(), author_id: post.author_id.toHexString() })
       }
       else {
-        c.string("Post not found", 404)
+        c.string("Location not found", 404)
       }
     }
-    else {
-      c.string("Location not found", 404)
-    }
+  }
+  catch (e) {
+    throw new InternalServerErrorException(e)
   }
 }
 

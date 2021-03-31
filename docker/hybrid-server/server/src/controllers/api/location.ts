@@ -28,7 +28,7 @@ export default function addLocationApi(app: Application) {
         throw new InternalServerErrorException()
       const location = await getCurrentLocation(clientAddress)
       if (!location)
-        throw new InternalServerErrorException()
+        throw new InternalServerErrorException("Location null")
       const res = await saveCurrentLocation(email, `${location.city}, ${location.country}`, description)
       if (res)
         c.response.status = Status.OK
