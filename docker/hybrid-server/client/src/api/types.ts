@@ -5,7 +5,8 @@ export const PostSchema = t.object({
   title: t.string(),
   text: t.string(),
   author_id: t.string(),
-  date_created: t.number()
+  date_created: t.number(),
+  __v: t.number()
 })
 export type Post = TypeOf<typeof PostSchema>
 
@@ -14,13 +15,15 @@ export const CommentSchema = t.object({
   text: t.string(),
   author_id: t.string(),
   post_id: t.string(),
-  date_created: t.number()
+  date_created: t.number(),
+  __v: t.number()
 })
 export type Comment = TypeOf<typeof CommentSchema>
 
 export const UserSchema = t.object({
   _id: t.string(),
-  email: t.string()
+  email: t.string(),
+  __v: t.number()
 })
 export type User = TypeOf<typeof UserSchema>
 
