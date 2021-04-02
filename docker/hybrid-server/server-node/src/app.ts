@@ -55,7 +55,7 @@ class App {
   }
 
   static() {
-    this.server.use(express.static(path.join(process.pwd(), '../client')))
+    this.server.use(express.static(path.join(process.cwd(), '../client')))
   }
 }
 
