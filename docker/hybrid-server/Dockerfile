@@ -21,7 +21,7 @@ RUN chmod +x build.sh
 RUN ./build.sh
 
 # building server-node
-FROM node:15.12.0 as server-node
+FROM node:15.13.0 as server-node
 COPY server-node/ /app
 WORKDIR /app
 RUN npm i && npm run build
@@ -51,7 +51,7 @@ RUN npm i && npm run build
 # CMD [ "-c", "/etc/supervisor/conf.d/supervisord.conf" ]
 
 ################################# final image
-FROM node:15.12.0
+FROM node:15.13.0-alpine3.10
 
 # copy mmproxy
 RUN apk add iproute2 supervisor
