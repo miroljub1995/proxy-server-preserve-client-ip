@@ -1,4 +1,4 @@
-import dbClient from "./database"
+import { con } from "./database"
 import { ObjectId, Schema, Types } from "mongoose";
 import { Document } from "mongoose";
 
@@ -19,6 +19,6 @@ const commentSchema = new Schema<Comment>({
 });
 
 export default async () => {
-  const client = await dbClient()
+  const client = await con
   return client.model<Comment>("comments", commentSchema)
 }

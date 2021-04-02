@@ -1,4 +1,4 @@
-import dbClient from "./database"
+import { con } from "./database"
 // import { Bson } from "mongo/mod.ts"
 import { Document, Schema, Types } from "mongoose"
 
@@ -12,6 +12,6 @@ const viewSchema = new Schema<ViewSchema>({
 });
 
 export default async () => {
-  const client = await dbClient()
+  const client = await con
   return client.model<ViewSchema>("views", viewSchema)
 }

@@ -1,5 +1,5 @@
 import { Document, Schema, Types } from "mongoose"
-import dbClient from "./database"
+import { con } from "./database"
 // import { Bson } from 'mongo/mod.ts'
 
 export interface User extends Document<Types.ObjectId> {
@@ -15,6 +15,6 @@ const userSchema = new Schema<User>({
 });
 
 export default async () => {
-  const client = await dbClient()
+  const client = await con
   return client.model<User>("users", userSchema)
 }
