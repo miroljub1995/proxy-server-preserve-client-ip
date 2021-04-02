@@ -24,6 +24,7 @@ RUN ./build.sh
 FROM node:15.12.0 as server-node
 ENV NODE_ENV=production
 COPY server-node/ /app
+WORKDIR /app
 RUN npm i && npm run build
 
 # ################################# final image
@@ -69,6 +70,7 @@ COPY --from=server-node /app/dist /apps/server/dist
 COPY --from=server-node /app/package.json /apps/server/package.json
 COPY --from=server-node /app/package-lock.json /apps/server/package-lock.json
 ENV NODE_ENV=production
+WORKDIR /apps/server
 RUN npm i --only=Prod
 
 ADD supervisord.conf /etc/supervisor/conf.d/
