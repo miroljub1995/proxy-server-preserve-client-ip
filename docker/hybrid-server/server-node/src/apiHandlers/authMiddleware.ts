@@ -14,7 +14,7 @@ export const authMiddleware: RequestHandler<{}, {}, {}, {}, { userId: Types.Obje
       var user = await UserModal.findOne({ email: payload.email }).exec()
       if (user && user._id) {
         res.locals.userId = user._id
-        return next()
+        return await next()
       }
     }
     catch (e) {
