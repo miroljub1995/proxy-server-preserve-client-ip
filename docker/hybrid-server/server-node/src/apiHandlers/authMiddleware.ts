@@ -7,13 +7,18 @@ export const authMiddleware: RequestHandler<{}, {}, {}, {}, { userId: Types.Obje
   var jwt = (req.cookies && req.cookies['jwt_token']) as string | undefined
   // console.log("Cookies", req.cookies)
   if (jwt) {
-    const payload = await validateJwt(jwt)
-    // console.log("Jwt payload", payload)
-    const UserModal = await userModel()
-    var user = await UserModal.findOne({ email: payload.email }).exec()
-    if (user && user._id) {
-      res.locals.userId = user._id
-      return next()
+    try {
+      const payload = await validateJwt(jwt)
+      // console.log("Jwt payload", payload)
+      const UserModal = await userModel()
+      var user = await UserModal.findOne({ email: payload.email }).exec()
+      if (user && user._id) {
+        res.locals.userId = user._id
+        return next()
+      }
+    }
+    catch (e) {
+      return res.status(401).send(e)
     }
   }
   res.status(401).send()
