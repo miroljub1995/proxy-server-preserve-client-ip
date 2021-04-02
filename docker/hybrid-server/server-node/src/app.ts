@@ -2,6 +2,7 @@ import express from 'express';
 import routes from './routes';
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import path from 'path'
 
 const origin = [
   "http://192.168.0.200:8083",
@@ -35,6 +36,7 @@ class App {
 
     this.middlewares();
     this.routes();
+    this.static()
   }
 
   middlewares() {
@@ -50,6 +52,10 @@ class App {
 
   routes() {
     this.server.use(routes);
+  }
+
+  static() {
+    this.server.use(express.static(path.join(process.pwd(), '../client')))
   }
 }
 

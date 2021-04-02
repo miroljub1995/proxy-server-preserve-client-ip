@@ -22,8 +22,7 @@ export type Comment = TypeOf<typeof CommentSchema>
 
 export const UserSchema = t.object({
   _id: t.string(),
-  email: t.string(),
-  __v: t.number()
+  email: t.string()
 })
 export type User = TypeOf<typeof UserSchema>
 

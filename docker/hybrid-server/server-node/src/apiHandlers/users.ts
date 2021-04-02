@@ -21,9 +21,10 @@ export const loginUser: RequestHandler<{}, {}, { email: string, password: string
 
   var user = await UserModel.findOne({ email, password }).exec()
   if (user) {
+    const { _id, email } = user
     const jwt = await generateJwt(email)
     res.cookie("jwt_token", jwt, { maxAge: 2147483647000, httpOnly: true, secure: false })
-    return res.json(user)
+    return res.json({ _id, email })
   }
   return res.status(404).send("Email or password does not match")
 }
