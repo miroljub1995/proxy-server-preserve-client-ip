@@ -17,7 +17,7 @@ export const addComment: RequestHandler<{}, {}, { text: string, post_id: string 
 
   newComment.text = req.body.text
   newComment.post_id = Types.ObjectId(req.body.post_id)
-  newComment.author_id = res.local.userId
+  newComment.author_id = res.locals.userId
   newComment.date_created = new Date().getTime()
 
   const comment = await newComment.save()
