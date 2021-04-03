@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import { generateJwt } from "../jwt";
 import userModel from '../database/userModel'
+import { Types } from "mongoose";
 
 export const registerUser: RequestHandler<{}, {}, { email: string, password: string }> = async (req, res, next) => {
   try {
@@ -25,7 +26,7 @@ export const loginUser: RequestHandler<{}, {}, { email: string, password: string
     const { email, password, } = req.body
     const UserModel = await userModel()
 
-    var user = await UserModel.findOne({ email, password }).exec()
+    const user = await UserModel.findOne({ email, password }).exec()
     if (user) {
       const { _id, email } = user
       const jwt = await generateJwt(email)
@@ -33,6 +34,22 @@ export const loginUser: RequestHandler<{}, {}, { email: string, password: string
       return res.json({ _id, email })
     }
     return res.status(404).send("Email or password does not match")
+  }
+  catch (e) {
+    next(e)
+  }
+}
+
+export const checkLogin: RequestHandler<{}, {}, {}, { userId: Types.ObjectId }> = async (req, res, next) => {
+  try {
+    const UserModel = await userModel()
+
+    const user = await UserModel.findOne({ _id: res.locals.userId }).exec()
+    if (user) {
+      const { _id, email } = user
+      return res.json({ _id, email })
+    }
+    return res.status(404).send("User not found")
   }
   catch (e) {
     next(e)

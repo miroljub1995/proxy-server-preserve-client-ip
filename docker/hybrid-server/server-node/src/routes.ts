@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { loginUser, registerUser, logoutUser } from './apiHandlers/users';
+import { loginUser, registerUser, logoutUser, checkLogin } from './apiHandlers/users';
 import { addComment, getCommentByPostId } from './apiHandlers/comments';
 import { addPost, deletePost, editPost, getPost, getPostsByMe, getWhatsHotPosts, getWhatsNewPosts } from './apiHandlers/posts';
 import { authMiddleware } from './apiHandlers/authMiddleware'
@@ -12,7 +12,7 @@ const routes = Router();
 routes.post('/api/register', registerUser)
 routes.post('/api/login', loginUser)
 routes.post('/api/logout', logoutUser)
-routes.get('/api/check-login', authMiddleware, (req, res) => res.send())
+routes.get('/api/check-login', authMiddleware, checkLogin)
 
 // // comments
 routes.get('/api/comments/by/post_id/:id', getCommentByPostId)
