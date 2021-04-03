@@ -35,8 +35,9 @@ spec:
             cpu: "100m"
         livenessProbe:
           exec:
-          - echo
-          - "Works"
+            command:
+            - echo
+            - "Works"
           periodSeconds: 2
 ---
 apiVersion: v1
