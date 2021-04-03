@@ -12,7 +12,10 @@ function Navigation() {
     console.log('Logout')
     const res = await fetch(ApiEndpoints.logout, {
       method: 'POST',
-      credentials: 'include'
+      credentials: 'include',
+      headers: {
+        "Content-type": "application/json"
+      }
     })
     if (res.status === 200) {
       setUserStatus(logout())

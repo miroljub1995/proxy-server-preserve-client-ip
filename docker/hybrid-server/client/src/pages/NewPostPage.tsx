@@ -15,7 +15,10 @@ export default function NewPost() {
     await fetch(ApiEndpoints.posts, {
       method: 'POST',
       body: JSON.stringify({ title, text }),
-      credentials: 'include'
+      credentials: 'include',
+      headers: {
+        "Content-type": "application/json"
+      }
     })
     history.push('/')
   }, [history, title, text])

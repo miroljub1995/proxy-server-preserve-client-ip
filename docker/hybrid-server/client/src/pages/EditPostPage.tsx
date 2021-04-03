@@ -24,7 +24,10 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
       await fetch(ApiEndpoints.posts_by_id(post._id), {
         method: 'PUT',
         body: JSON.stringify({ title, text }),
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+          "Content-type": "application/json"
+        }
       })
       history.push('/')
     }

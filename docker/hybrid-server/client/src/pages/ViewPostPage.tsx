@@ -31,11 +31,15 @@ export default ({ match }: RouteComponentProps<{ id: string }>) => {
   const [newComment, setNewComment] = useState('')
   const handleEnterOnComment = useEnterCallback(
     useCallback(async () => {
+      console.log({ text: newComment, post_id: post?._id })
       if (post) {
         await fetch(ApiEndpoints.comments, {
           method: 'POST',
           credentials: 'include',
-          body: JSON.stringify({ text: newComment, post_id: post._id })
+          body: JSON.stringify({ text: newComment, post_id: post._id }),
+          headers: {
+            "Content-type": "application/json"
+          }
         })
         fetchAgainComments()
         setNewComment('')
