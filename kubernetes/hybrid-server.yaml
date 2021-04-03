@@ -32,7 +32,7 @@ spec:
           value: "mongodb://mongo-db-0.mongo-db:27017,mongo-db-1.mongo-db:27017,mongo-db-2.mongo-db:27017/?replicaSet=repl-set0"
         resources:
           limits:
-            cpu: "50m"
+            cpu: "100m"
 ---
 apiVersion: v1
 kind: Service
