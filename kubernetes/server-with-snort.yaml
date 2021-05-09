@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: protected-proxy-deployment
+  name: server-with-snort-deployment
   labels:
-    app: protected-proxy
+    app: server-with-snort
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: protected-proxy
+      app: server-with-snort
   template:
     metadata:
       labels:
-        app: protected-proxy
+        app: server-with-snort
     spec:
       containers:
-      - name: protected-proxy
-        image: miroljub1995/pspcip_test-proxy
+      - name: server-with-snort
+        image: miroljub1995/pspcip_server-with-snort
         imagePullPolicy: Always
         ports:
         - containerPort: 8084
@@ -29,12 +29,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: protected-proxy-lb
+  name: server-with-snort-svc
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
   selector:
-    app: protected-proxy
+    app: server-with-snort
   ports:
     - port: 8084
       name: web

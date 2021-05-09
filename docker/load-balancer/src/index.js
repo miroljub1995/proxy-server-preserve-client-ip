@@ -3,7 +3,7 @@ const { exec } = require('child_process')
 const kc = new k8s.KubeConfig()
 kc.loadFromDefault()
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api)
-const appName = "protected-proxy"
+const appName = "server-with-snort"
 const appPort = "8084"
 
 function getPreroutingCommand(every, toDestination, del) {

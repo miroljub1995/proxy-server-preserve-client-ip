@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # consts
-IMAGE_NAME='local/pspcip/test-snort'
+IMAGE_NAME='local/pspcip/server-with-snort'
 
 case $1 in
 rebuild)
