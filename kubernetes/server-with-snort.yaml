@@ -27,11 +27,11 @@ spec:
             - NET_ADMIN
         volumeMounts:
         - name: varlog
-          mountPath: /var/log
+          mountPath: /var/log/apps
 
       - name: snort-log
         image: busybox
-        args: [/bin/sh, -c, 'tail -n+1 -f /var/log/supervisor_snort.log']
+        args: [/bin/sh, -c, 'tail -n+1 -f /var/log/apps/supervisor_snort.log']
         volumeMounts:
         - name: varlog
           mountPath: /var/log
