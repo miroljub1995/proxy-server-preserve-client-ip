@@ -27,7 +27,7 @@ spec:
             - NET_ADMIN
         volumeMounts:
         - name: varlog
-          mountPath: /var/log/supervisor
+          mountPath: /var/log
 
       - name: snort-log
         image: busybox
