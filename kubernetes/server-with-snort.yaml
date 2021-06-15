@@ -31,7 +31,8 @@ spec:
 
       - name: snort-log
         image: busybox
-        args: [/bin/sh, -c, 'tail -n+1 -f /var/log/apps/supervisor_snort.log']
+        # args: [/bin/sh, -c, 'tail -n+1 -f /var/log/apps/supervisor_snort.log']
+        args: [/bin/sh, -c, 'while ! tail -n+1 -f /var/log/apps/supervisor_snort.log ; do sleep 1 ; done']
         volumeMounts:
         - name: shared-log
           mountPath: /var/log/apps
