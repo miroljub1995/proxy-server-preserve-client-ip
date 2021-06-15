@@ -25,20 +25,20 @@ spec:
           capabilities:
             add:
             - NET_ADMIN
-        volumeMounts:
-        - name: varlog
-          mountPath: /var/log/apps
+      #   volumeMounts:
+      #   - name: varlog
+      #     mountPath: /var/log/apps
 
-      - name: snort-log
-        image: busybox
-        args: [/bin/sh, -c, 'tail -n+1 -f /var/log/apps/supervisor_snort.log']
-        volumeMounts:
-        - name: varlog
-          mountPath: /var/log
+      # - name: snort-log
+      #   image: busybox
+      #   args: [/bin/sh, -c, 'tail -n+1 -f /var/log/apps/supervisor_snort.log']
+      #   volumeMounts:
+      #   - name: varlog
+      #     mountPath: /var/log
 
-      volumes:
-      - name: varlog
-        emptyDir: {}
+      # volumes:
+      # - name: varlog
+      #   emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
