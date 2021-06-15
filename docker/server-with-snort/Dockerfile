@@ -8,7 +8,7 @@ RUN echo 'alert tcp any any -> $HOME_NET any (flags: S; msg:"Possible TCP DoS"; 
 
 ADD nginx.conf /etc/nginx/
 EXPOSE 8084
-RUN mkdir /var/log/supervisor
+RUN mkdir /var/log/apps
 
 ADD supervisord.conf /etc/supervisor/conf.d/
 CMD supervisord
