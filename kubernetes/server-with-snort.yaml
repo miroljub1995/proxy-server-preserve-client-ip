@@ -25,9 +25,9 @@ spec:
           capabilities:
             add:
             - NET_ADMIN
-      #   volumeMounts:
-      #   - name: varlog
-      #     mountPath: /var/log/apps
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log/apps
 
       - name: snort-log
         image: busybox
